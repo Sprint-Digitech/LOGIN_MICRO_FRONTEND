@@ -1,0 +1,247 @@
+.background-img {
+  position: fixed; /* Fixes the image to cover the entire viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mat-mdc-card-content {
+    display: block;
+    padding: 0 40px;
+}
+
+.card-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns the card to the right */
+  align-items: center;
+  height: 100vh; /* Full height to center the content vertically */
+  position: relative;
+  padding: 1rem; 
+}
+
+.login-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  
+}
+
+// .login-content {
+//   flex: 1;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   padding: 2rem;
+//   gap: 4rem;
+
+// }
+
+.login-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between; /* Change from center to space-between */
+  align-items: center;
+  padding: 2rem;
+  gap: 6rem; /* Increase gap for more separation */
+  max-width: 1400px; /* Add max-width */
+  margin: 0 auto; /* Center the content */
+}
+
+.client-text {
+  margin: 1rem auto;
+  background-color: #f5f5f5;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  border: 5px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: rotate(0deg); 
+}
+
+.budha-badge {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  background-color: #ff9800;
+  color: white;
+  padding: 0.25rem 1rem;
+  border-radius: 4px; 
+  writing-mode: horizontal-tb; 
+  transform: rotate(335deg); 
+}
+.logo {
+  background: none !important;  /* Remove any applied background */
+  mix-blend-mode: multiply;     /* Helps blend with the background */
+}
+
+.left-section.logo {
+  width: 150px;
+  height: 100px;
+  margin-bottom: 2rem;
+}
+
+// .left-section {
+//   flex: 1;
+//   max-width: 500px;
+// }
+
+.left-section {
+  flex: 1;
+  max-width: 500px; /* Increase max-width */
+  // padding-right: 1rem; /* Add padding for separation */
+  padding-left: 2rem;
+}
+
+.left-section h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #1a73e8;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.left-section.subtitle {
+  font-size: 1.2rem;
+  color: #5f6368;
+}
+
+// .right-section {
+//   flex: 1;
+//   max-width: 500px;
+// }
+
+.right-section {
+  flex: 1;
+  max-width: 600px;
+  padding-left: 2rem; /* Add padding for separation */
+}
+
+mat-card {
+  padding: 1rem;
+  border-radius: 42px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+mat-form-field {
+  width: 100%;
+  /* margin-bottom: 1rem; */
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 1.5rem; */
+}
+
+.form-actions mat-checkbox {
+  font-size: 0.9rem;
+}
+
+.forgot-password {
+  font-size: 0.9rem;
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+.login-button {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+.footer {
+  background-color: #ffffff;
+  padding: 1rem 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-size: 0.9rem;
+  color: #5f6368;
+}
+
+
+.footer-content .footer-divider {
+  height: 20px;
+  width: 1px;
+  background-color: #e0e0e0;
+  margin: 0 1rem;
+}
+.footer-content .footer-logo {
+  height: 30px;
+  margin: 0 0.5rem;
+}
+
+mat-icon{
+  color: #1a73e8;
+}
+
+@media (max-width: 768px) {
+  .login-content {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 2rem;
+  }
+
+  .left-section {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .left-section h1 {
+    font-size: 2.5rem;
+  }
+
+  .right-section {
+    max-width: 100%;
+  }
+
+  .footer-content {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+
+  .footer-content .footer-divider {
+    display: none;
+  }
+}
+}
+
+button {
+  font-size: 16px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+img {
+  margin-right: 10px;
+}
+
+/* Logo positioning - ADD THIS */
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20px;
+  gap: 10px;
+}
+
+.logo-container .logo {
+  width: 80px;
+  height: 80px;
+  margin: 0 !important;
+}
