@@ -44,9 +44,11 @@
   justify-content: space-between; /* Change from center to space-between */
   align-items: center;
   padding: 2rem;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  padding-right: 0px;
   gap: 6rem; /* Increase gap for more separation */
   max-width: 1400px; /* Add max-width */
-  margin: 0 auto; /* Center the content */
 }
 
 .client-text {
@@ -91,9 +93,13 @@
 
 .left-section {
   flex: 1;
-  max-width: 500px; /* Increase max-width */
+  max-width: 100%; /* Increase max-width */
   // padding-right: 1rem; /* Add padding for separation */
   padding-left: 2rem;
+  display:flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
 }
 
 .left-section h1 {
@@ -109,6 +115,8 @@
   color: #5f6368;
 }
 
+
+
 // .right-section {
 //   flex: 1;
 //   max-width: 500px;
@@ -117,12 +125,12 @@
 .right-section {
   flex: 1;
   max-width: 600px;
-  padding-left: 2rem; /* Add padding for separation */
 }
 
 mat-card {
-  padding: 1rem;
-  border-radius: 42px;
+  padding: 2rem;
+  padding-top: 80px;
+  height: 100vh;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -157,21 +165,14 @@ mat-form-field {
   font-size: 1rem;
 }
 
-.footer {
-  background-color: #ffffff;
-  padding: 1rem 0;
-}
-
 .footer-content {
   display: flex;
-  justify-content: center;
   align-items: center;
   max-width: 1200px;
-  margin: 0 auto;
+  // margin: 0 auto;
   font-size: 0.9rem;
   color: #5f6368;
 }
-
 
 .footer-content .footer-divider {
   height: 20px;
