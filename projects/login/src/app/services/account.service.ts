@@ -40,7 +40,7 @@ export class AccountService {
 
   environment = {
       production: false,
-      urlAddress: 'https://localhost:7230',
+      urlAddress: 'https://localhost:7274',
     };
 
   public get userValue() {
@@ -60,6 +60,21 @@ export class AccountService {
             loginUser.employee.tenantSchema
           );
           this.loginSubject$.next(loginUser);
+          return loginUser;
+        } else {
+        }
+      })
+    );
+  }
+
+  logindetail(route: string) {
+    let url = this.createCompleteRoute(route, this.environment.urlAddress);
+    return this.http.get<any>(url).pipe(
+      map((loginUser: any) => {
+        // store user details and jwt token in local storage to keep user logged in between page refreshes
+        if (loginUser != null) {
+          sessionStorage.setItem('user', JSON.stringify(loginUser));
+          // this.loginSubject$.next(loginUser);
           return loginUser;
         } else {
         }

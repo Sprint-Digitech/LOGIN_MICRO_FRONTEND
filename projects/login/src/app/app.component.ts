@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../app/services/account.service';
-import { BehaviorSubject, first } from 'rxjs';
+import { BehaviorSubject, first, forkJoin } from 'rxjs';
 import { Login } from '../app/services/account.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 // Google
@@ -147,9 +147,45 @@ export class AppComponent {
         .subscribe({
           next: (response) => {
             console.log("Login Successfull", response);
-            debugger;
-            this.router.navigate(['/authentication/welcome-user'])
+            // debugger;
+            // this.router.navigate(['/authentication/welcome-user'])
+            this.openSnackBar('Login Successful', 'Close', 'success-snackbar');
             const email = response.employee.email;
+              // Use forkJoin to call both APIs in parallel if needed,
+          // or just the second API if it depends on the first's success.
+          // In this case, the second API depends on the first's response,
+          // so we're keeping it sequential but demonstrating forkJoin's structure.
+          forkJoin({
+            employeeLoginDetail: this.accountService
+              .logindetail(`api/Account/GetEmployeeRoleDetail?email=${email}`)
+              .pipe(first()),
+            // You can add more API calls here if they are independent of each other
+            // For example: anotherApiCall: this.anotherService.getSomeData()
+          }).subscribe({
+            next: (results) => {
+              const userDetail = results.employeeLoginDetail;
+              console.log('Raw response:', userDetail);
+
+              if (userDetail !== undefined) {
+                this.loading = false; // <<< UNCOMMENTED: Set loading to false on success
+                // this.reloadPage();
+                const processedMenus = this.processMenus(
+                  userDetail.employeeRoleLoginDtos
+                );
+              } else {
+                this.error = 'Invalid credentials!';
+                this.loading = false; // Set loading to false if userDetail is undefined
+              }
+            },
+            error: (detailError) => {
+              console.error(
+                'Error fetching employee login detail:',
+                detailError
+              );
+              this.error = 'Failed to load user details.';
+              this.loading = false; // Set loading to false on error
+            },
+          });
         }},);
     }
   
@@ -163,4 +199,36 @@ export class AppComponent {
         panelClass: [className],
       });
     }
+
+    processMenus(menuData: any[]) {
+    let menuMap = new Map();
+
+    menuData.forEach((menu) => {
+      if (!menu.menuParentId) {
+        // It's a parent menu
+        menuMap.set(menu.menuID, {
+          icon: 'menu',
+          label: menu.menuDisplayName,
+          route: menu.menuPath,
+          expanded: false,
+          submenu: [],
+        });
+      }
+    });
+
+    // Add submenus to their parent menu
+    menuData.forEach((menu) => {
+      if (menu.menuParentId) {
+        const parentMenu = menuMap.get(menu.menuParentId);
+        if (parentMenu) {
+          parentMenu.submenu.push({
+            label: menu.menuDisplayName,
+            route: menu.menuPath,
+          });
+        }
+      }
+    });
+
+    return Array.from(menuMap.values());
+  }
 }
