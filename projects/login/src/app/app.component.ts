@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
@@ -45,7 +44,6 @@ import { PasswordNemoComponent } from 'password-nemo';
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
     CommonModule,
     FormsModule,
     MatAutocompleteModule,

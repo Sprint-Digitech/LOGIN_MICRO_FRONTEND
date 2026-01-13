@@ -1,4 +1,3 @@
-import { RouterOutlet } from '@angular/router';
 import {
   HttpErrorResponse,
   HttpClient,
@@ -78,7 +77,6 @@ import {
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
     CommonModule,
     FormsModule,
     MatAutocompleteModule,
