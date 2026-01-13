@@ -116,10 +116,10 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.authService.authState.subscribe((user) => {
-      if (user) {
+    this.authService.authState.subscribe((user: SocialUser | null) => {
+      if (user && user.idToken) {
         this.accountService.GoogleLogin(user.idToken).subscribe(
-          (response) => {
+          (response: any) => {
             if (response) {
               console.log('Login successful:', response);
               console.log('User:', user);
@@ -131,7 +131,7 @@ export class AppComponent {
               this.router.navigate(['/login']);
             }
           },
-          (error) => {
+          (error: any) => {
             console.error('Login failed:', error);
           }
         );
@@ -157,7 +157,7 @@ export class AppComponent {
       .login('api/Account/Login', user)
       .pipe(first())
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           console.log('Login Successfull', response);
           // debugger;
           // this.router.navigate(['/authentication/welcome-user'])

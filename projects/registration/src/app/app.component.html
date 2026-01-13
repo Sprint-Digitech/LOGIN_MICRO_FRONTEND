@@ -75,7 +75,7 @@
               <!-- First Name -->
               <div class="form-field">
                 <label class="field-label">First Name <span class="required-asterisk">*</span></label>
-                <fv-entry-field [control]="firstNameControl" label="" [required]="true" [allowAlphabetsOnly]="true"
+                <fv-entry-field [control]="firstNameControl" label="" [allowAlphabetsOnly]="true"
                   [maxLength]="50" placeholder="Enter first name">
                 </fv-entry-field>
               </div>
@@ -83,7 +83,7 @@
               <!-- Last Name -->
               <div class="form-field">
                 <label class="field-label">Last Name <span class="required-asterisk">*</span></label>
-                <fv-entry-field [control]="lastNameControl" label="" [required]="true" [allowAlphabetsOnly]="true"
+                <fv-entry-field [control]="lastNameControl" label="" [allowAlphabetsOnly]="true"
                   [maxLength]="50" placeholder="Enter last name">
                 </fv-entry-field>
               </div>
@@ -91,7 +91,7 @@
               <!-- Email -->
               <div class="form-field">
                 <label class="field-label">Work Email <span class="required-asterisk">*</span></label>
-                <fv-email-field [control]="emailControl" label="" [required]="true" placeholder="Enter work email">
+                <fv-email-field [control]="emailControl" label="" placeholder="Enter work email">
                 </fv-email-field>
                 <mat-error *ngIf="accountFormGroup.get('email')?.hasError('emailExists') && 
                      !accountFormGroup.get('email')?.pending" class="custom-error">
@@ -105,7 +105,7 @@
               <!-- Phone Number -->
               <div class="form-field">
                 <label class="field-label">Phone Number <span class="required-asterisk">*</span></label>
-                <fv-phone-field [control]="phoneNumberControl" label="" [required]="true"
+                <fv-phone-field [control]="phoneNumberControl" label=""
                   placeholder="Enter 10-digit phone number">
                 </fv-phone-field>
               </div>
@@ -113,8 +113,8 @@
               <!-- Company Name -->
               <div class="form-field">
                 <label class="field-label">Company Name <span class="required-asterisk">*</span></label>
-                <fv-entry-field [control]="companyNameControl" label="" [required]="true"
-                  [allowedPattern]="'^[a-zA-Z .&-]+$'" [maxLength]="50" placeholder="Enter company name">
+                <fv-entry-field [control]="companyNameControl" label=""
+                  [maxLength]="50" placeholder="Enter company name">
                 </fv-entry-field>
                 <mat-error *ngIf="accountFormGroup.get('companyName')?.hasError('companyNameExists')"
                   class="custom-error">
@@ -128,7 +128,7 @@
               <!-- Employee Count -->
               <div class="form-field">
                 <label class="field-label">Employee Count <span class="required-asterisk">*</span></label>
-                <fv-dropdown [control]="employeesControl" label="" [required]="true"
+                <fv-dropdown [control]="employeesControl" label=""
                   [options]="employeeCountOptionsForDropdown" placeholder="Select employee count">
                 </fv-dropdown>
               </div>
@@ -136,7 +136,7 @@
               <!-- Designation -->
               <div class="form-field">
                 <label class="field-label">Designation <span class="required-asterisk">*</span></label>
-                <fv-entry-field [control]="designationNameControl" label="" [required]="true"
+                <fv-entry-field [control]="designationNameControl" label=""
                   [allowAlphabetsOnly]="true" [maxLength]="50" placeholder="Enter your designation">
                 </fv-entry-field>
               </div>
@@ -144,7 +144,7 @@
               <!-- Password -->
               <div class="form-field">
                 <label class="field-label">Password <span class="required-asterisk">*</span></label>
-                <fv-password-field [control]="passwordControl" label="" [required]="true" placeholder="Enter password">
+                <fv-password-field [control]="passwordControl" label="" placeholder="Enter password">
                 </fv-password-field>
                 <mat-error *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="custom-error">
                   {{ getPasswordErrorMessage() }}
@@ -154,7 +154,7 @@
               <!-- Confirm Password -->
               <div class="form-field">
                 <label class="field-label">Confirm Password <span class="required-asterisk">*</span></label>
-                <fv-password-field [control]="confirmPasswordControl" label="" [required]="true"
+                <fv-password-field [control]="confirmPasswordControl" label=""
                   placeholder="Confirm your password" (paste)="disablePaste($event)">
                 </fv-password-field>
                 <mat-error
@@ -188,7 +188,7 @@
                 <!-- Industry -->
                 <div class="form-field">
                   <label class="field-label">Industry <span class="required-asterisk">*</span></label>
-                  <fv-dropdown [control]="industryControl" label="" [required]="true"
+                  <fv-dropdown [control]="industryControl" label=""
                     [options]="industryOptionsForDropdown" placeholder="Select industry">
                   </fv-dropdown>
                 </div>

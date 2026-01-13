@@ -247,7 +247,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
     private location: Location
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.initializeForms();
@@ -529,7 +529,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         companyName: [
           '',
           {
-            validators: [Validators.required],
+            validators: [
+              Validators.required,
+              Validators.pattern('^[a-zA-Z .&-]+$')
+            ],
             asyncValidators: [this.companyNameExistsValidator()],
             updateOn: 'blur',
           },
@@ -798,7 +801,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         })
       )
       .subscribe({
-        next: (dataSent) => {
+        next: (dataSent: any) => {
           console.log('Company registration successful:', dataSent);
           if (dataSent === null) {
             this.notificationService.showSuccess('Company saved successfully');
@@ -995,7 +998,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           })
         )
         .subscribe({
-          next: (response) => {
+          next: (response: any) => {
             console.log('Registration successful:', response);
             try {
               const companyName = this.accountFormGroup.value.companyName;
@@ -1023,7 +1026,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
               );
             }
           },
-          error: (error) => {
+          error: (error: any) => {
             console.error('Registration error details:', {
               status: error.status,
               statusText: error.statusText,
@@ -1098,8 +1101,8 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
               typeof registeredEmail === 'string'
                 ? registeredEmail
                 : registeredEmail.email ||
-                  registeredEmail.emailId ||
-                  registeredEmail;
+                registeredEmail.emailId ||
+                registeredEmail;
             return emailValue && emailValue.trim().toLowerCase() === email;
           });
           return exists ? { emailExists: true } : null;
@@ -1124,11 +1127,10 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         'X-Tenant-Schema': 'dbo',
       });
 
-      const url = `${
-        this.accountService.environment.urlAddress
-      }/api/Company/CheckCompanyNameExists?companyName=${encodeURIComponent(
-        companyName
-      )}`;
+      const url = `${this.accountService.environment.urlAddress
+        }/api/Company/CheckCompanyNameExists?companyName=${encodeURIComponent(
+          companyName
+        )}`;
       return this.http.get<{ exists: boolean }>(url, { headers }).pipe(
         map((response: { exists: boolean }) => {
           return response.exists ? { companyNameExists: true } : null;
