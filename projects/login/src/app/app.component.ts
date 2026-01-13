@@ -1,13 +1,23 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators as NgValidators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountService } from '../app/services/account.service';
+import { AccountService } from '../../../../shell/src/app/shared/services/account.service';
 import { BehaviorSubject, first, forkJoin } from 'rxjs';
-import { Login } from '../app/services/account.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Login } from '../../../../shell/src/app/shared/services/account.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 // Google
-import { SocialAuthService, GoogleLoginProvider, SocialUser, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
+import {
+  SocialAuthService,
+  GoogleLoginProvider,
+  SocialUser,
+  GoogleSigninButtonModule,
+} from '@abacritt/angularx-social-login';
 import { HttpClient } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
@@ -33,6 +43,7 @@ import { NemoMaxMessageComponent } from 'nemo-max-message-fovestta';
 import { PasswordNemoComponent } from 'password-nemo';
 @Component({
   selector: 'app-root',
+  standalone: true,
   imports: [
     RouterOutlet,
     CommonModule,
@@ -47,111 +58,112 @@ import { PasswordNemoComponent } from 'password-nemo';
     MatNativeDateModule,
     MatButtonModule,
     MatRadioModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatIconModule,
     MatSlideToggleModule,
     MatSelectModule,
     MatListModule,
     MatDividerModule,
-    MatCardModule,
     GoogleSigninButtonModule,
     MatProgressSpinnerModule,
+    MatSnackBarModule,
     RequiredNemoComponent,
-    NemoMessageEmailComponent,
-    NemoMaxMessageComponent,
-    PasswordNemoComponent
+    PasswordNemoComponent,
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'login';
-   loginForm: FormGroup;
+  loginForm: FormGroup;
   user: SocialUser | null = null;
   hidePassword = true;
   loading = false;
+  backgroundImage: string = "url('/assets/img/teamless.jpg')";
   submitted = false;
   returnUrl: string = '';
   error = '';
   login$ = new BehaviorSubject<boolean>(false);
 
-  
-    constructor(
-      private formBuilder: FormBuilder,
-      private route: ActivatedRoute,
-      private router: Router,
-      private accountService: AccountService,
-      private authService: SocialAuthService,
-      private http:HttpClient,
-      private _snackBar: MatSnackBar,
-    ) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private accountService: AccountService,
+    private authService: SocialAuthService,
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
+  ) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [NgValidators.required, NgValidators.email]],
+      password: [
+        '',
+        [
+          NgValidators.required,
+          NgValidators.minLength(8),
+          NgValidators.maxLength(15),
+          NgValidators.pattern(
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'
+          ),
+        ],
+      ],
+      rememberMe: [false],
+    });
+  }
 
-      this.loginForm = this.formBuilder.group({
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(8),Validators.maxLength(15),Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$')]],
-        rememberMe: [false]
-      });
-    }
-  
-    // convenience getter for easy access to form fields
-    get f() {
-      return this.loginForm.controls;
-    }
+  // convenience getter for easy access to form fields
+  get f() {
+    return this.loginForm.controls;
+  }
 
-    ngOnInit(): void {
-      this.authService.authState.subscribe((user) => {
-        if (user) {
-          this.accountService.GoogleLogin(user.idToken).subscribe(
-            (response) => {
-              if(response){
-                console.log('Login successful:', response);
-                console.log('User:', user);
-                debugger
-                localStorage.setItem('token',JSON.stringify(user))
-                this.router.navigate(['/authentication/welcome-user'])
-                this.reloadPage();
-              }
-              else{
-                this.router.navigate(['/authentication/login'])
-              }
-            },
-            (error) => {
-              console.error('Login failed:', error);
+  ngOnInit(): void {
+    this.authService.authState.subscribe((user) => {
+      if (user) {
+        this.accountService.GoogleLogin(user.idToken).subscribe(
+          (response) => {
+            if (response) {
+              console.log('Login successful:', response);
+              console.log('User:', user);
+              debugger;
+              localStorage.setItem('token', JSON.stringify(user));
+              this.router.navigate(['/authentication/welcome-user']);
+              this.reloadPage();
+            } else {
+              this.router.navigate(['/login']);
             }
-          );
-        }
-      });
-    }
-  
-    signInWithGoogle(): void {
-      this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
-    }
+          },
+          (error) => {
+            console.error('Login failed:', error);
+          }
+        );
+      }
+    });
+  }
 
+  signInWithGoogle(): void {
+    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
 
-    
-  
-    submit(): void {
-      this.submitted = true;
-      this.error = '';
-      const user: Login = {
-        email: this.loginForm.value.email,
-        password: this.loginForm.value.password,
-        rememberMe: false,
-      };
-  
-      this.loading = true;
-      this.accountService
-        .login('api/Account/Login', user)
-        .pipe(first())
-        .subscribe({
-          next: (response) => {
-            console.log("Login Successfull", response);
-            // debugger;
-            // this.router.navigate(['/authentication/welcome-user'])
-            this.openSnackBar('Login Successful', 'Close', 'success-snackbar');
-            const email = response.employee.email;
-              // Use forkJoin to call both APIs in parallel if needed,
+  submit(): void {
+    this.submitted = true;
+    this.error = '';
+    const user: Login = {
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password,
+      rememberMe: false,
+    };
+
+    this.loading = true;
+    this.accountService
+      .login('api/Account/Login', user)
+      .pipe(first())
+      .subscribe({
+        next: (response) => {
+          console.log('Login Successfull', response);
+          // debugger;
+          // this.router.navigate(['/authentication/welcome-user'])
+          this.openSnackBar('Login Successful', 'Close', 'success-snackbar');
+          const email = response.employee.email;
+          // Use forkJoin to call both APIs in parallel if needed,
           // or just the second API if it depends on the first's success.
           // In this case, the second API depends on the first's response,
           // so we're keeping it sequential but demonstrating forkJoin's structure.
@@ -186,21 +198,22 @@ export class AppComponent {
               this.loading = false; // Set loading to false on error
             },
           });
-        }},);
-    }
-  
-    reloadPage(): void {
-      window.location.reload();
-    }
-    openSnackBar(message: string, action: string, className: string) {
-      this._snackBar.open(message, action, {
-        duration: 1500,
-        verticalPosition: 'bottom',
-        panelClass: [className],
+        },
       });
-    }
+  }
 
-    processMenus(menuData: any[]) {
+  reloadPage(): void {
+    window.location.reload();
+  }
+  openSnackBar(message: string, action: string, className: string) {
+    this._snackBar.open(message, action, {
+      duration: 1500,
+      verticalPosition: 'bottom',
+      panelClass: [className],
+    });
+  }
+
+  processMenus(menuData: any[]) {
     let menuMap = new Map();
 
     menuData.forEach((menu) => {

@@ -1,0 +1,563 @@
+<div class="page-center">
+  <div class="signup-wrapper">
+    <div class="main">
+      <div class="logo-box">
+        <img src="/assets/img/fovesta1.png" alt="Fovesta Icon" class="logo-img" />
+        <span class="divider-line"></span>
+        <span class="label">HRMS</span>
+      </div>
+
+      <div class="signup-container">
+        <form [formGroup]="accountFormGroup">
+          <div class="step-indicator">
+            <!-- Step 1 -->
+            <div class="step" [ngClass]="{
+            'step-active': getStepState(1) === 'edit',
+            'step-completed': getStepState(1) === 'done'
+          }">
+              <div class="step-icon">
+                <mat-icon *ngIf="getStepState(1) === 'done'">check</mat-icon>
+                <span *ngIf="getStepState(1) !== 'done'">1</span>
+              </div>
+              <span class="step-label">Account</span>
+            </div>
+            <div class="step-divider" [ngStyle]="{
+              'background-color':
+                getStepState(1) === 'done'
+                  ? '#2D7239'  
+                  : getStepState(2) === 'edit'
+                  ? '#006AFF'  
+                  : '#E0E0E0'  
+            }"></div>
+
+            <!-- Step 2 -->
+            <div class="step" [ngClass]="{
+            'step-active': getStepState(2) === 'edit',
+            'step-completed': getStepState(2) === 'done'
+          }">
+              <div class="step-icon">
+                <mat-icon *ngIf="getStepState(2) === 'done'">check</mat-icon>
+                <span *ngIf="getStepState(2) !== 'done'">2</span>
+              </div>
+              <span class="step-label">Company</span>
+            </div>
+            <div class="step-divider" [ngStyle]="{
+              'background-color':
+                getStepState(2) === 'done'
+                  ? '#2D7239' 
+                  : getStepState(3) === 'edit'
+                  ? '#006AFF' 
+                  : '#E0E0E0'
+            }"></div>
+
+            <!-- Step 3 -->
+            <div class="step" [ngClass]="{
+            'step-active': getStepState(3) === 'edit',
+            'step-completed': getStepState(3) === 'done'
+          }">
+              <div class="step-icon">
+                <mat-icon *ngIf="getStepState(3) === 'done'">check</mat-icon>
+                <span *ngIf="getStepState(3) !== 'done'">3</span>
+              </div>
+              <span class="step-label">Review</span>
+            </div>
+          </div>
+
+          <!-- Account Step -->
+          <div *ngIf="currentStep === 1 && !isCompleted" class="step-content">
+            <h2>Create Your Account</h2>
+            <p class="step-subtitle">
+              Start your 30-day free trial - no credit card required
+            </p>
+
+            <!-- Form Fields Grid -->
+            <div class="form-fields-container">
+              <!-- First Name -->
+              <div class="form-field">
+                <label class="field-label">First Name <span class="required-asterisk">*</span></label>
+                <fv-entry-field [control]="firstNameControl" label="" [required]="true" [allowAlphabetsOnly]="true"
+                  [maxLength]="50" placeholder="Enter first name">
+                </fv-entry-field>
+              </div>
+
+              <!-- Last Name -->
+              <div class="form-field">
+                <label class="field-label">Last Name <span class="required-asterisk">*</span></label>
+                <fv-entry-field [control]="lastNameControl" label="" [required]="true" [allowAlphabetsOnly]="true"
+                  [maxLength]="50" placeholder="Enter last name">
+                </fv-entry-field>
+              </div>
+
+              <!-- Email -->
+              <div class="form-field">
+                <label class="field-label">Work Email <span class="required-asterisk">*</span></label>
+                <fv-email-field [control]="emailControl" label="" [required]="true" placeholder="Enter work email">
+                </fv-email-field>
+                <mat-error *ngIf="accountFormGroup.get('email')?.hasError('emailExists') && 
+                     !accountFormGroup.get('email')?.pending" class="custom-error">
+                  Email already registered
+                </mat-error>
+                <mat-error *ngIf="accountFormGroup.get('email')?.pending" class="custom-error">
+                  Checking email availability...
+                </mat-error>
+              </div>
+
+              <!-- Phone Number -->
+              <div class="form-field">
+                <label class="field-label">Phone Number <span class="required-asterisk">*</span></label>
+                <fv-phone-field [control]="phoneNumberControl" label="" [required]="true"
+                  placeholder="Enter 10-digit phone number">
+                </fv-phone-field>
+              </div>
+
+              <!-- Company Name -->
+              <div class="form-field">
+                <label class="field-label">Company Name <span class="required-asterisk">*</span></label>
+                <fv-entry-field [control]="companyNameControl" label="" [required]="true"
+                  [allowedPattern]="'^[a-zA-Z .&-]+$'" [maxLength]="50" placeholder="Enter company name">
+                </fv-entry-field>
+                <mat-error *ngIf="accountFormGroup.get('companyName')?.hasError('companyNameExists')"
+                  class="custom-error">
+                  This company name already exists
+                </mat-error>
+                <mat-error *ngIf="accountFormGroup.get('companyName')?.pending" class="custom-error">
+                  Checking company name availability...
+                </mat-error>
+              </div>
+
+              <!-- Employee Count -->
+              <div class="form-field">
+                <label class="field-label">Employee Count <span class="required-asterisk">*</span></label>
+                <fv-dropdown [control]="employeesControl" label="" [required]="true"
+                  [options]="employeeCountOptionsForDropdown" placeholder="Select employee count">
+                </fv-dropdown>
+              </div>
+
+              <!-- Designation -->
+              <div class="form-field">
+                <label class="field-label">Designation <span class="required-asterisk">*</span></label>
+                <fv-entry-field [control]="designationNameControl" label="" [required]="true"
+                  [allowAlphabetsOnly]="true" [maxLength]="50" placeholder="Enter your designation">
+                </fv-entry-field>
+              </div>
+
+              <!-- Password -->
+              <div class="form-field">
+                <label class="field-label">Password <span class="required-asterisk">*</span></label>
+                <fv-password-field [control]="passwordControl" label="" [required]="true" placeholder="Enter password">
+                </fv-password-field>
+                <mat-error *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="custom-error">
+                  {{ getPasswordErrorMessage() }}
+                </mat-error>
+              </div>
+
+              <!-- Confirm Password -->
+              <div class="form-field">
+                <label class="field-label">Confirm Password <span class="required-asterisk">*</span></label>
+                <fv-password-field [control]="confirmPasswordControl" label="" [required]="true"
+                  placeholder="Confirm your password" (paste)="disablePaste($event)">
+                </fv-password-field>
+                <mat-error
+                  *ngIf="accountFormGroup.hasError('passwordMismatch') && accountFormGroup.get('confirmPassword')?.touched"
+                  class="custom-error">
+                  Passwords do not match
+                </mat-error>
+              </div>
+            </div>
+            <div class="button-divider"></div>
+
+            <div class="button-row">
+              <button mat-flat-button class="email-button" (click)="nextStep()">
+                Continue
+              </button>
+              <button mat-stroked-button (click)="goBack()" class="back-button"
+                style="background: #303030;color: #FFFFFF;">
+                Back
+              </button>
+            </div>
+          </div>
+
+          <!-- Company Step -->
+          <div *ngIf="currentStep === 2 && !isCompleted" class="step-content">
+            <h2>Company Details</h2>
+            <p class="step-subtitle">
+              Let's get to know your company better
+            </p>
+            <form [formGroup]="companyFormGroup" class="company-form">
+              <div class="form-fields-container">
+                <!-- Industry -->
+                <div class="form-field">
+                  <label class="field-label">Industry <span class="required-asterisk">*</span></label>
+                  <fv-dropdown [control]="industryControl" label="" [required]="true"
+                    [options]="industryOptionsForDropdown" placeholder="Select industry">
+                  </fv-dropdown>
+                </div>
+
+                <!-- Website -->
+                <div class="form-field">
+                  <fv-entry-field [control]="websiteControl" label="Website" placeholder="Enter website">
+                  </fv-entry-field>
+                </div>
+
+                <!-- Country -->
+                <div class="form-field">
+                  <fv-entry-field [control]="countryControl" label="Country" placeholder="India">
+                  </fv-entry-field>
+                </div>
+
+                <!-- City -->
+                <div class="form-field">
+                  <fv-entry-field [control]="cityControl" label="City" placeholder="Enter city">
+                  </fv-entry-field>
+                </div>
+
+                <!-- Date Format -->
+                <div class="form-field">
+                  <fv-dropdown [control]="dateFormatControl" label="Date Format"
+                    [options]="dateFormatOptionsForDropdown" placeholder="Select date format">
+                  </fv-dropdown>
+                </div>
+
+                <!-- Date Field Separator -->
+                <div class="form-field">
+                  <fv-dropdown [control]="dateSeparatorControl" label="Date Field Separator"
+                    [options]="dateSeparatorOptionsForDropdown" placeholder="Select separator">
+                  </fv-dropdown>
+                </div>
+
+                <!-- Time Format -->
+                <div class="form-field">
+                  <fv-dropdown [control]="timeFormatControl" label="Time Format"
+                    [options]="timeFormatOptionsForDropdown" placeholder="Select time format">
+                  </fv-dropdown>
+                </div>
+
+                <!-- Timezone -->
+                <div class="form-field">
+                  <fv-dropdown [control]="timezoneControl" label="Timezone" [options]="timezoneOptionsForDropdown"
+                    placeholder="Select timezone">
+                  </fv-dropdown>
+                </div>
+
+                <!-- Display Format -->
+                <div class="form-field">
+                  <fv-dropdown [control]="displayFormatControl" label="Display Format"
+                    [options]="displayFormatOptionsForDropdown" placeholder="Select display format">
+                  </fv-dropdown>
+                </div>
+              </div>
+
+              <div class="button-divider"></div>
+              <div class="button-row">
+                <button mat-stroked-button (click)="prevStep()" class="back-button">Back</button>
+                <button mat-flat-button class="continue-button" (click)="nextStep()">
+                  Save & Next
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Review Step -->
+          <div *ngIf="currentStep === 3 && !isCompleted" class="review-step">
+            <h2 class="review-title">Review & Confirm</h2>
+            <p class="review-subtitle">
+              Start your 30-day free trial - no credit card required
+            </p>
+
+            <div class="review-info">
+              <ul>
+                <li class="info"><strong>First Name:</strong> <span>{{accountFormGroup.get('firstName')?.value}}</span>
+                </li>
+                <li class="info"><strong>Last Name:</strong> <span> {{accountFormGroup.get('lastName')?.value}}</span>
+                </li>
+                <li class="info"><strong>Email:</strong> <span>{{accountFormGroup.get('email')?.value}}</span></li>
+                <li class="info"><strong>Company:</strong> <span> {{accountFormGroup.get('companyName')?.value}}</span>
+                </li>
+                <li class="info"><strong>Industry:</strong> <span> {{companyFormGroup.get('industry')?.value}}</span>
+                </li>
+              </ul>
+            </div>
+
+            <form [formGroup]="reviewFormGroup">
+              <mat-checkbox formControlName="confirmTerms" class="terms-section">
+                I agree to the
+                <a href="#" (click)="openTermsModal(); $event.preventDefault()" class="terms-link">Terms of
+                  Service</a>
+                and
+                <a href="#" (click)="openPrivacyModal(); $event.preventDefault()" class="terms-link">Privacy
+                  Policy</a>
+              </mat-checkbox>
+              <!-- Terms of Service Modal -->
+              <div class="modal-overlay" *ngIf="showTermsModal" (click)="closeTermsModal()">
+                <div class="modal-content" (click)="$event.stopPropagation()">
+                  <div class="modal-header">
+                    <h2>Terms of Service</h2>
+                    <button class="close-button" (click)="closeTermsModal()">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="text-center mb-6">
+                      <img src="assets/img/fovesta.png" alt="Fovestta HR Software" class="logo-img" />
+                      <p class="last-updated">Last updated: {{getCurrentDate()}}</p>
+                    </div>
+
+                    <section class="modal-section">
+                      <h3>1. Acceptance of Terms</h3>
+                      <p>
+                        By accessing and using Fovestta HR Software ("Service"), you accept and agree to
+                        be bound by the terms and
+                        provision of this agreement. If you do not agree to abide by the above, please
+                        do not use this service.
+                      </p>
+                    </section>
+
+                    <section class="modal-section">
+                      <h3>2. Description of Service</h3>
+                      <p class="mb-3">
+                        Fovestta provides cloud-based Human Resources management software that includes
+                        but is not limited to:
+                      </p>
+                      <ul class="service-list">
+                        <li>Employee information management</li>
+                        <li>Payroll processing and management</li>
+                        <li>Time and attendance tracking</li>
+                        <li>Performance management tools</li>
+                        <li>Recruitment and onboarding features</li>
+                        <li>Reporting and analytics</li>
+                        <li>Multi-company management capabilities</li>
+                      </ul>
+                    </section>
+
+                    <section class="modal-section">
+                      <h3>3. User Accounts and Registration</h3>
+                      <div class="subsection">
+                        <p><strong>3.1 Account Creation:</strong> You must provide accurate, current,
+                          and complete information during registration and maintain the accuracy of
+                          such information.</p>
+                        <p><strong>3.2 Account Security:</strong> You are responsible for maintaining
+                          the confidentiality of your account credentials and for all activities that
+                          occur under your account.</p>
+                        <p><strong>3.3 Account Termination:</strong> We reserve the right to terminate
+                          accounts that violate these terms or remain inactive for extended periods.
+                        </p>
+                      </div>
+                    </section>
+
+                    <section class="modal-section">
+                      <h3>4. Data Ownership and Responsibility</h3>
+                      <div class="subsection">
+                        <p><strong>4.1 Your Data:</strong> You retain ownership of all data you input
+                          into the Service, including employee information, payroll data, and company
+                          records.</p>
+                        <p><strong>4.2 Data Accuracy:</strong> You are responsible for the accuracy,
+                          quality, and legality of your data and the means by which you acquired such
+                          data.</p>
+                        <p><strong>4.3 Data Export:</strong> You may export your data at any time during
+                          your subscription period and for 30 days after termination.</p>
+                      </div>
+                    </section>
+
+                    <section class="modal-section">
+                      <h3>5. Payment Terms</h3>
+                      <div class="subsection">
+                        <p><strong>5.1 Subscription Fees:</strong> Service fees are billed in advance on
+                          a monthly or annual basis according to your chosen plan.</p>
+                        <p><strong>5.2 Free Trial:</strong> New users receive a 30-day free trial with
+                          full access to premium features.</p>
+                        <p><strong>5.3 Refunds:</strong> Refunds are provided according to our refund
+                          policy, available upon request.</p>
+                      </div>
+                    </section>
+
+                    <section class="modal-section">
+                      <h3>6. Contact Information</h3>
+                      <div class="contact-info">
+                        <p>If you have any questions about these Terms of Service, please contact us:
+                        </p>
+                        <div class="contact-box">
+                          <p><strong>Email:</strong> legal&#64;fovestta.com</p>
+                          <p><strong>Phone:</strong> [Your Phone Number]</p>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Privacy Policy Modal -->
+              <div class="modal-overlay" *ngIf="showPrivacyModal" (click)="closePrivacyModal()">
+                <div class="modal-content" (click)="$event.stopPropagation()">
+                  <div class="modal-header">
+                    <h2>Privacy Policy</h2>
+                    <button class="close-button" (click)="closePrivacyModal()">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="text-center mb-6">
+                      <img src="assets/img/fovesta.png" alt="Fovestta HR Software" class="logo-img" />
+                      <p class="last-updated">Last updated: {{getCurrentDate()}}</p>
+                    </div>
+
+                    <section class="modal-section">
+                      <h3>1. Introduction</h3>
+                      <p>
+                        Fovestta HR Software ("we," "our," or "us") is committed to protecting your
+                        privacy. This Privacy Policy
+                        explains how we collect, use, disclose, and safeguard your information when you
+                        use our HR management
+                        platform. We comply with applicable data protection laws, including GDPR, CCPA,
+                        and other regional privacy
+                        regulations.
+                      </p>
+                    </section>
+
+                    <section class="modal-section">
+                      <h3>2. Information We Collect</h3>
+                      <div class="subsection">
+                        <h4>2.1 Information You Provide</h4>
+                        <ul class="service-list">
+                          <li><strong>Account Information:</strong> Name, email address, phone number,
+                            company details, job title</li>
+                          <li><strong>Employee Data:</strong> Personal information, employment
+                            records, payroll data, performance reviews</li>
+                          <li><strong>Payment Information:</strong> Billing address, payment method
+                            details (processed securely by third-party providers)</li>
+                          <li><strong>Communication Data:</strong> Support tickets, feedback, and
+                            correspondence with our team</li>
+                        </ul>
+
+                        <h4>2.2 Information We Collect Automatically</h4>
+                        <ul class="service-list">
+                          <li><strong>Usage Data:</strong> How you interact with our Service, features
+                            used, time spent</li>
+                          <li><strong>Device Information:</strong> IP address, browser type, operating
+                            system, device identifiers</li>
+                          <li><strong>Log Data:</strong> Server logs, error reports, performance
+                            metrics</li>
+                          <li><strong>Cookies and Tracking:</strong> Session cookies, preference
+                            cookies, analytics cookies</li>
+                        </ul>
+                      </div>
+                    </section>
+
+                    <section class="modal-section">
+                      <h3>3. How We Use Your Information</h3>
+                      <div class="subsection">
+                        <p><strong>3.1 Service Provision:</strong></p>
+                        <ul class="service-list">
+                          <li>Provide and maintain our HR management platform</li>
+                          <li>Process payroll and manage employee records</li>
+                          <li>Generate reports and analytics</li>
+                          <li>Facilitate communication within your organization</li>
+                        </ul>
+
+                        <p><strong>3.2 Account Management:</strong></p>
+                        <ul class="service-list">
+                          <li>Create and manage user accounts</li>
+                          <li>Authenticate users and prevent unauthorized access</li>
+                          <li>Process payments and manage subscriptions</li>
+                          <li>Provide customer support</li>
+                        </ul>
+                      </div>
+                    </section>
+
+                    <section class="modal-section">
+                      <h3>4. Data Security</h3>
+                      <div class="subsection">
+                        <p><strong>4.1 Security Measures:</strong></p>
+                        <ul class="service-list">
+                          <li>Industry-standard encryption for data in transit and at rest</li>
+                          <li>Multi-factor authentication and access controls</li>
+                          <li>Regular security audits and penetration testing</li>
+                          <li>Employee training on data protection practices</li>
+                          <li>Secure data centers with physical access controls</li>
+                        </ul>
+                      </div>
+                    </section>
+
+                    <section class="modal-section">
+                      <h3>5. Your Rights and Choices</h3>
+                      <div class="subsection">
+                        <p><strong>5.1 Access and Control:</strong></p>
+                        <ul class="service-list">
+                          <li><strong>Access:</strong> Request access to your personal information
+                          </li>
+                          <li><strong>Correction:</strong> Update or correct inaccurate information
+                          </li>
+                          <li><strong>Deletion:</strong> Request deletion of your personal information
+                          </li>
+                          <li><strong>Portability:</strong> Export your data in a machine-readable
+                            format</li>
+                        </ul>
+                        <p><strong>5.2 Exercising Your Rights:</strong> Contact us at
+                          privacy&#64;fovestta.com to exercise any of these rights. We will respond
+                          within 30 days.</p>
+                      </div>
+                    </section>
+
+                    <section class="modal-section">
+                      <h3>6. Contact Us</h3>
+                      <div class="contact-info">
+                        <p>If you have any questions about this Privacy Policy, please contact us:</p>
+                        <div class="contact-box">
+                          <p><strong>Privacy Officer:</strong> privacy&#64;fovestta.com</p>
+                          <p><strong>General Inquiries:</strong> support&#64;fovestta.com</p>
+                          <p><strong>Phone:</strong> [Your Phone Number]</p>
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+
+              <div class="buttons-dividers"></div>
+              <div class="button-rows" style="margin-top: 0px;">
+                <button mat-stroked-button (click)="prevStep()" class="back-button"
+                  style="background: #303030;color: #FFFFFF;">
+                  Back
+                </button>
+                <button mat-flat-button class="continue-button" style="background: #006AFF;color: #FFFFFF;"
+                  (click)="onSubmit()">
+                  Go to Dashboard
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="trial-features">
+            <div class="features-grid">
+              <div class="feature-item">
+                <span>Your 30-day free trial includes:</span>
+              </div>
+              <div class="feature-item">
+                <img src="assets/img/Multi-company management-icon.png" alt="Multi-company">
+                <span>Multi-company management</span>
+              </div>
+              <div class="feature-item">
+                <img src="assets/img/Group features-icon.png" alt="Group feature">
+                <span>Group features</span>
+              </div>
+              <div class="feature-item">
+                <img src="assets/img/Premium support-icon.png" alt="Premium Support">
+                <span>Premium support</span>
+              </div>
+            </div>
+            <div class="features-grid">
+              <div class="feature-item">
+                <span>Copyright &copy; 2025 Outsmart Technology</span>
+              </div>
+              <div class="feature-item">
+
+                <span>Marketed by: Sprint Digitech</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Success Step -->
+          <div *ngIf="isCompleted" class="success-content"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
