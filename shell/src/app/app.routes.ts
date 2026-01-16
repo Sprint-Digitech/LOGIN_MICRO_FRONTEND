@@ -9,10 +9,10 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'register',
-    loadComponent: () =>
-      import('../../../projects/registration/src/app/app.component').then(
-        (m) => m.AppComponent
+    path: '',
+    loadChildren: () =>
+      import('../../../projects/registration/src/app/app.routes').then(
+        (m) => m.routes
       ),
   },
 ];

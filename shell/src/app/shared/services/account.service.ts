@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { AuditLoggingService } from './audit-logging.service';
+import { SecureTokenStorageService } from './secure-token-storage.service';
 
 export interface Login {
   email: string;
@@ -38,9 +40,32 @@ export interface RegistrationResponseDto {
   providedIn: 'root',
 })
 export class AccountService {
+  private userSubject$ = new BehaviorSubject<any | null>(
+    JSON.parse(sessionStorage.getItem('user') || 'null')
+  );
+  public user$ = this.userSubject$.asObservable();
+  private menuDataSubject = new BehaviorSubject<any[]>(
+    JSON.parse(sessionStorage.getItem('menus') || '[]')
+  );
+  public menuData$ = this.menuDataSubject.asObservable();
   private loginSubject$: BehaviorSubject<any | null>;
   public user: Observable<any | null>;
-  constructor(private router: Router, private http: HttpClient) {
+  private onboardingModeSubject = new BehaviorSubject<boolean>(false);
+  public onboardingMode$ = this.onboardingModeSubject.asObservable();
+
+  private activeOnboardingStepSubject = new BehaviorSubject<number>(0);
+  public activeOnboardingStep$ =
+    this.activeOnboardingStepSubject.asObservable();
+
+  private onboardingHeaderModeSubject = new BehaviorSubject<boolean>(false);
+  public onboardingHeaderMode$ =
+    this.onboardingHeaderModeSubject.asObservable();
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private auditLogger: AuditLoggingService,
+    private secureTokenStorage: SecureTokenStorageService
+  ) {
     this.loginSubject$ = new BehaviorSubject(
       JSON.parse(sessionStorage.getItem('user')!)
     );
@@ -75,6 +100,11 @@ export class AccountService {
     );
   }
 
+  step(endpoint: string, params: any): Observable<any> {
+    const url = `${this.environment.urlAddress}/api/${endpoint}`;
+    return this.http.get(url, { params });
+  }
+
   logindetail(route: string) {
     let url = this.createCompleteRoute(route, this.environment.urlAddress);
     return this.http.get<any>(url).pipe(
@@ -92,6 +122,21 @@ export class AccountService {
 
   private createCompleteRoute = (route: string, envAddress: string) => {
     return `${envAddress}/${route}`;
+  };
+
+  public getEmployee = (route: any, params?: any) => {
+    return this.http.get<any[]>(
+      this.createCompleteRoute(route, this.environment.urlAddress),
+      { params }
+    );
+  };
+
+  public getCompany = (route: string, headers?: HttpHeaders) => {
+    const options = headers ? { headers } : {};
+    return this.http.get<any[]>(
+      this.createCompleteRoute(route, this.environment.urlAddress),
+      options
+    );
   };
 
   public update = (route: string, body: any) => {
@@ -145,5 +190,97 @@ export class AccountService {
   GoogleLogin(idToken: string) {
     const url = this.environment.urlAddress;
     return this.http.post(`${url}/api/Account/google-login`, { idToken });
+  }
+
+  setUser(user: any) {
+    sessionStorage.setItem('user', JSON.stringify(user));
+    this.userSubject$.next(user);
+  }
+
+  setMenuData(data: any[]) {
+    // Create a new array reference to ensure change detection triggers
+    const newMenuData = Array.isArray(data) ? [...data] : [];
+    sessionStorage.setItem('menus', JSON.stringify(newMenuData));
+    console.log(
+      'setMenuData: Updating menu observable with',
+      newMenuData.length,
+      'menus'
+    );
+    this.menuDataSubject.next(newMenuData);
+  }
+
+  getEmployeeLoginDetail(email: string, tenantSchema: string): Observable<any> {
+    const url = `${
+      this.environment.urlAddress
+    }/api/Account/GetEmployeeRoleDetail?email=${encodeURIComponent(email)}`;
+    const headers = { 'x-tenant-schema': tenantSchema };
+
+    return this.http.get(url, { headers });
+  }
+
+  // Get branches of the company for given tenant
+  getBranchesForTenant(tenantSchema: string): Observable<any[]> {
+    const url = `${this.environment.urlAddress}/api/CompanyBranch/CompanyBranchList`;
+    const headers = { 'x-tenant-schema': tenantSchema };
+    return this.http.get<any[]>(url, { headers });
+  }
+  // Get company info for given tenant
+  getCompanyInfoForTenant(tenantSchema: string): Observable<any> {
+    const url = `${this.environment.urlAddress}/api/Company/GetCompanyInfo`; // Adjust endpoint accordingly
+    const headers = { 'x-tenant-schema': tenantSchema };
+    return this.http.get<any>(url, { headers });
+  }
+
+  private branchesSubject = new BehaviorSubject<any[]>([]);
+  public branches$ = this.branchesSubject.asObservable();
+
+  setBranches(branches: any[]) {
+    sessionStorage.setItem('branches', JSON.stringify(branches));
+    this.branchesSubject.next(branches);
+  }
+
+  private companySubject = new BehaviorSubject<any>(null);
+  public company$ = this.companySubject.asObservable();
+
+  setCompany(company: any) {
+    sessionStorage.setItem('company', JSON.stringify(company));
+    this.companySubject.next(company);
+  }
+
+  clearUser() {
+    sessionStorage.removeItem('user');
+    this.userSubject$.next(null);
+  }
+
+  clearMenus() {
+    sessionStorage.removeItem('menus');
+    this.menuDataSubject.next([]);
+  }
+
+  public forgotPassword = (route: any, body: any) => {
+    return this.http.post<any[]>(
+      this.createCompleteRoute(route, this.environment.urlAddress),
+      body,
+      { responseType: 'text' as 'json' }
+    );
+  };
+
+  logout() {
+    // Log logout event
+    this.auditLogger.logLogout();
+
+    // Clear secure token storage
+    this.secureTokenStorage.clearAll();
+
+    sessionStorage.clear();
+    // localStorage.clear();
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('tenantSchema');
+    localStorage.removeItem('token');
+    this.clearMenus();
+    this.clearUser();
+    this.loginSubject$.next(null);
+    this.router.navigate(['/login']);
   }
 }

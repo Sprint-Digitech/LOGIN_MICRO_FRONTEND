@@ -3,11 +3,12 @@ import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
-  Validators as NgValidators,
+  Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AccountService } from '../../../../shell/src/app/shared/services/account.service';
-import { BehaviorSubject, first, forkJoin } from 'rxjs';
+import { NotificationService } from '../../../../shell/src/app/shared/services/notification.service';
+import { BehaviorSubject, first, forkJoin, Observable } from 'rxjs';
 import { Login } from '../../../../shell/src/app/shared/services/account.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 // Google
@@ -17,8 +18,7 @@ import {
   SocialUser,
   GoogleSigninButtonModule,
 } from '@abacritt/angularx-social-login';
-import { HttpClient } from '@angular/common/http';
-
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -66,6 +66,7 @@ import { PasswordNemoComponent } from 'password-nemo';
     MatSnackBarModule,
     RequiredNemoComponent,
     PasswordNemoComponent,
+    RouterModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
@@ -76,7 +77,8 @@ export class AppComponent {
   user: SocialUser | null = null;
   hidePassword = true;
   loading = false;
-  backgroundImage: string = "url('/assets/img/teamless.jpg')";
+  backgroundImage: string =
+    "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),url('/assets/img/teamless.jpg')";
   submitted = false;
   returnUrl: string = '';
   error = '';
@@ -88,22 +90,16 @@ export class AppComponent {
     private router: Router,
     private accountService: AccountService,
     private authService: SocialAuthService,
+    private notificationService: NotificationService,
     private http: HttpClient,
     private _snackBar: MatSnackBar
   ) {
+    if (this.accountService.userValue) {
+      this.router.navigate(['/welcome']);
+    }
     this.loginForm = this.formBuilder.group({
-      email: ['', [NgValidators.required, NgValidators.email]],
-      password: [
-        '',
-        [
-          NgValidators.required,
-          NgValidators.minLength(8),
-          NgValidators.maxLength(15),
-          NgValidators.pattern(
-            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'
-          ),
-        ],
-      ],
+      email: ['', [Validators.required, Validators.email]],
+      password: [''],
       rememberMe: [false],
     });
   }
@@ -114,22 +110,49 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    this.authService.authState.subscribe((user: SocialUser | null) => {
-      if (user && user.idToken) {
+    this.authService.authState.subscribe((user) => {
+      if (user) {
         this.accountService.GoogleLogin(user.idToken).subscribe(
-          (response: any) => {
+          (response) => {
             if (response) {
-              console.log('Login successful:', response);
-              console.log('User:', user);
-              debugger;
-              localStorage.setItem('token', JSON.stringify(user));
-              this.router.navigate(['/authentication/welcome-user']);
-              this.reloadPage();
+              const email = user.email;
+              this.accountService
+                .logindetail(`api/Account/GetEmployeeRoleDetail?email=${email}`)
+                .pipe(first())
+                .subscribe((userDetail) => {
+                  if (userDetail) {
+                    //checking for companyid
+                    if (!userDetail.companyId) {
+                      this.router.navigate(['employee/employeeOnboarding']);
+                      return;
+                    }
+
+                    // DO NOT REMAP srNo!
+                    const processedRoles =
+                      userDetail.employeeRoleLoginDtos ?? [];
+                    const processedMenus = this.processMenus(processedRoles);
+
+                    const finalUser = {
+                      ...userDetail,
+                      employeeRoleLoginDtos: processedRoles,
+                    };
+
+                    sessionStorage.setItem(
+                      'menus',
+                      JSON.stringify(processedMenus)
+                    );
+                    sessionStorage.setItem('user', JSON.stringify(finalUser));
+                    this.accountService.setUser(finalUser);
+                    this.accountService.setMenuData(processedMenus);
+
+                    this.router.navigate(['/welcome']);
+                  }
+                });
             } else {
               this.router.navigate(['/login']);
             }
           },
-          (error: any) => {
+          (error) => {
             console.error('Login failed:', error);
           }
         );
@@ -144,102 +167,225 @@ export class AppComponent {
   submit(): void {
     this.submitted = true;
     this.error = '';
+    if (this.loginForm.invalid) {
+      this.notificationService.showError('Please fill all required fields.');
+      return;
+    }
     const user: Login = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
-      rememberMe: false,
+      rememberMe: this.loginForm.value.rememberMe,
     };
-
     this.loading = true;
+
     this.accountService
       .login('api/Account/Login', user)
       .pipe(first())
       .subscribe({
-        next: (response: any) => {
-          console.log('Login Successfull', response);
-          // debugger;
-          // this.router.navigate(['/authentication/welcome-user'])
-          this.openSnackBar('Login Successful', 'Close', 'success-snackbar');
-          const email = response.employee.email;
-          // Use forkJoin to call both APIs in parallel if needed,
-          // or just the second API if it depends on the first's success.
-          // In this case, the second API depends on the first's response,
-          // so we're keeping it sequential but demonstrating forkJoin's structure.
+        next: (loginResponse) => {
+          const email = loginResponse?.employee?.email;
+
           forkJoin({
             employeeLoginDetail: this.accountService
               .logindetail(`api/Account/GetEmployeeRoleDetail?email=${email}`)
               .pipe(first()),
-            // You can add more API calls here if they are independent of each other
-            // For example: anotherApiCall: this.anotherService.getSomeData()
           }).subscribe({
             next: (results) => {
               const userDetail = results.employeeLoginDetail;
-              console.log('Raw response:', userDetail);
-
               if (userDetail !== undefined) {
-                this.loading = false; // <<< UNCOMMENTED: Set loading to false on success
-                // this.reloadPage();
-                const processedMenus = this.processMenus(
-                  userDetail.employeeRoleLoginDtos
-                );
+                //check for companyid
+                // if (!userDetail.companyId) {
+                //   const fullName = userDetail.firstName?.trim() || '';
+                //   let firstName = fullName;
+                //   let lastName = '';
+
+                //   if (fullName.includes(' ')) {
+                //     const parts = fullName.split(' ');
+                //     firstName = parts[0];
+                //     lastName = parts.slice(1).join(' ');
+                //   }
+
+                //   // const onboardingUser = {
+                //   //   ...userDetail,
+                //   //   firstName: firstName,
+                //   //   lastName: lastName,
+                //   // };
+
+                //   // sessionStorage.setItem(
+                //   //   'onboardingUser',
+                //   //   JSON.stringify(onboardingUser)
+                //   // );
+                //   // this.router.navigate(['employee/employeeOnboarding'], {
+                //   //   state: { userDetail },
+                //   // });
+                //   this.loading = false;
+                //   this.router.navigate(['register/welcome']);
+                //   return;
+                // }
+                const branchId =
+                  userDetail.companyBranchId || userDetail.branchID || '';
+                // Do not substitute email when employeId is missing; keep it null
+                const employeeId = userDetail.employeId ?? null;
+                const statusId = userDetail.initialSetupStatusID;
+                const processedRoles = userDetail.employeeRoleLoginDtos ?? [];
+                const processedMenus = this.processMenus(processedRoles);
+
+                const finalUser = {
+                  ...userDetail,
+                  employeeRoleLoginDtos: processedRoles,
+                  companyBranchId: branchId,
+                  employeId: employeeId,
+                };
+
+                sessionStorage.setItem('menus', JSON.stringify(processedMenus));
+                sessionStorage.setItem('user', JSON.stringify(finalUser));
+                this.accountService.setUser(finalUser);
+                this.accountService.setMenuData(processedMenus);
+                // this.router.navigate(['/register/welcome']);
+                this.callInitialSetupStatus(branchId).subscribe({
+                  next: (res: any) => {
+                    if (res && res.isSetupComplete === false) {
+                      this.router.navigate(['/initial-setup'], {
+                        replaceUrl: true,
+                      });
+                    } else {
+                      this.router.navigate(['/welcome'], {
+                        replaceUrl: true,
+                      });
+                    }
+                    this.loading = false;
+                  },
+                  error: () => {
+                    console.error('Error fetching setup status');
+                    this.router.navigate(['/welcome'], {
+                      replaceUrl: true,
+                    });
+                    this.loading = false;
+                  },
+                });
               } else {
-                this.error = 'Invalid credentials!';
-                this.loading = false; // Set loading to false if userDetail is undefined
+                const msg = 'Invalid credentials!';
+                this.error = msg;
+                this.notificationService.showError(msg);
+                this.loading = false;
               }
             },
             error: (detailError) => {
-              console.error(
-                'Error fetching employee login detail:',
-                detailError
+              const msg = this.handleError(
+                detailError,
+                'Failed to load user details.'
               );
-              this.error = 'Failed to load user details.';
-              this.loading = false; // Set loading to false on error
+              this.error = msg;
+              this.notificationService.showError(msg);
+              this.loading = false;
             },
           });
         },
+        error: (loginError) => {
+          const msg = this.handleError(
+            loginError,
+            'Login failed. Please try again.'
+          );
+          this.error = msg;
+          this.notificationService.showError(msg);
+          this.loading = false;
+        },
       });
+  }
+
+  private handleError(
+    err: any,
+    fallback: string = 'An error occurred'
+  ): string {
+    try {
+      // Check if server is down (status 0 or no status)
+      if (err instanceof HttpErrorResponse) {
+        if (err.status === 0 || !err.status) {
+          return 'Server is down. Please contact support.';
+        }
+      } else if (
+        err?.status === 0 ||
+        (!err?.status && err?.error === undefined)
+      ) {
+        return 'Server is down. Please contact support.';
+      }
+
+      if (err?.error?.errors) {
+        return typeof err.error.errors === 'string'
+          ? err.error.errors
+          : fallback;
+      }
+      if (typeof err?.error === 'string') {
+        return err.error;
+      }
+      if (err?.error?.Error?.Message) {
+        return err.error.Error.Message;
+      }
+      if (err?.error?.message) {
+        return err.error.message;
+      }
+      if (err?.message) {
+        return err.message;
+      }
+    } catch {}
+    return fallback;
+  }
+
+  private callInitialSetupStatus(branchId: string): Observable<any> {
+    const params = { companyBranchId: branchId };
+
+    return this.accountService.step('InitialSetup/Initialstatus', params);
   }
 
   reloadPage(): void {
     window.location.reload();
   }
-  openSnackBar(message: string, action: string, className: string) {
-    this._snackBar.open(message, action, {
-      duration: 1500,
-      verticalPosition: 'bottom',
-      panelClass: [className],
-    });
-  }
 
-  processMenus(menuData: any[]) {
-    let menuMap = new Map();
+  processMenus(menuData: any[]): any[] {
+    const menuMap = new Map<number, any>();
 
+    // Collect root menus (menuParentId === null)
     menuData.forEach((menu) => {
       if (!menu.menuParentId) {
-        // It's a parent menu
         menuMap.set(menu.menuID, {
-          icon: 'menu',
-          label: menu.menuDisplayName,
-          route: menu.menuPath,
-          expanded: false,
+          menuID: menu.menuID,
+          menuName: menu.menuName,
+          menuDisplayName: menu.menuDisplayName,
+          menuPath: menu.menuPath,
+          menuParentId: menu.menuParentId,
+          srNo: menu.srNo, // FROM DATABASE, not remapped
           submenu: [],
         });
       }
     });
 
-    // Add submenus to their parent menu
+    // Add submenus under their parent
     menuData.forEach((menu) => {
       if (menu.menuParentId) {
         const parentMenu = menuMap.get(menu.menuParentId);
         if (parentMenu) {
           parentMenu.submenu.push({
-            label: menu.menuDisplayName,
-            route: menu.menuPath,
+            menuID: menu.menuID,
+            menuName: menu.menuName,
+            menuDisplayName: menu.menuDisplayName,
+            menuPath: menu.menuPath,
+            menuParentId: menu.menuParentId,
+            srNo: menu.srNo, // FROM DATABASE, not remapped
           });
         }
       }
     });
 
-    return Array.from(menuMap.values());
+    // Sort root menus by srNo ascending
+    const resultMenus = Array.from(menuMap.values());
+    resultMenus.sort((a, b) => (a.srNo ?? 0) - (b.srNo ?? 0));
+
+    // Sort submenus by srNo ascending
+    resultMenus.forEach((menu) => {
+      if (menu.submenu && menu.submenu.length > 0) {
+        menu.submenu.sort((a: any, b: any) => (a.srNo ?? 0) - (b.srNo ?? 0));
+      }
+    });
+    return resultMenus;
   }
 }

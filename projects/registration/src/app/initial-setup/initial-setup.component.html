@@ -1,0 +1,229 @@
+<!-- Admin/HR Setup View -->
+<ng-container *ngIf="isAdminOrHR">
+<div class="welcome-container">
+  <h1>Welcome to Fovestta Payroll</h1>
+  <p><b>Set up your organisation before you run your first payroll.</b></p>
+</div>
+
+<div class="content-wrapper">
+  <mat-card class="combined-card">
+    <div class="setup-section">
+      <div class="header-row">
+        <h1>Get Started with Payroll</h1>
+        <p class="progress-text">{{ completedSteps }} of {{ totalSteps }} forms completed</p>
+      </div>
+      <div class="progress-bar-container">
+        <mat-progress-bar mode="determinate" [value]="progress"></mat-progress-bar>
+      </div>
+    </div>
+
+    <div class="steps-section">
+      <div class="steps-grid" *ngIf="currentStepIndex !== 9">
+        <ng-container *ngFor="let step of steps; let i = index">
+          <div
+            class="step-card"
+            *ngIf="i < 6"
+            [ngClass]="{
+              'completed': stepCompletion[i],
+              'pending': !stepCompletion[i]
+            }"
+            (click)="goToStep(i)"
+          >
+            <div class="step-icon">
+              <mat-icon *ngIf="stepCompletion[i]" class="check-icon">check_circle</mat-icon>
+              <span *ngIf="!stepCompletion[i]" class="step-number">{{ i + 1 }}</span>
+            </div>
+            <div class="step-content">
+              <span class="step-label">{{ step.label }}</span>
+              <span class="step-status" *ngIf="stepCompletion[i]" class="completed-text">Completed</span>
+              <span class="step-status" *ngIf="!stepCompletion[i]" class="next-step-text">Next Step →</span>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="last-row">
+        <div
+          class="step-card"
+          *ngIf="currentStepIndex !== 9 && steps.length > 6"
+          [ngClass]="{
+            'completed': stepCompletion[6],
+            'pending': !stepCompletion[6]
+          }"
+          (click)="goToStep(6)"
+        >
+          <div class="step-icon">
+            <mat-icon *ngIf="stepCompletion[6]" class="check-icon">check_circle</mat-icon>
+            <span *ngIf="!stepCompletion[6]" class="step-number">7</span>
+          </div>
+          <div class="step-content">
+            <span class="step-label">{{ steps[6].label }}</span>
+            <span class="step-status" *ngIf="stepCompletion[6]" class="completed-text">Completed</span>
+            <span class="step-status" *ngIf="!stepCompletion[6]" class="next-step-text">Next Step →</span>
+          </div>
+        </div>
+
+        <div class="clarification-section">
+          <div class="clarification-content">
+            <p><strong>Need Clarification?</strong> Drop us an <a href="mailto:support@fovestta.com">email</a> and we'll get back to you.</p>
+            <p>You can directly talk to us every Mon-Sat 10:00 AM to 6:00 PM.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<mat-card class="features-card">
+  <div class="features">
+    <h2>Additional Notable Features</h2>
+    <div class="feature-cards">
+      <div class="feature-card">
+        <div class="feature-icon direct-deposit">
+          <mat-icon>account_balance</mat-icon>
+        </div>
+        <h3>Direct Deposit</h3>
+        <p>Automate payroll with secure and timely direct deposits to employee accounts.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon salary-templates">
+          <mat-icon>description</mat-icon>
+        </div>
+        <h3>Salary Templates</h3>
+        <p>Create and manage reusable salary structures for different roles and levels.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon auto-reminders">
+          <mat-icon>notifications</mat-icon>
+        </div>
+        <h3>Auto Reminders</h3>
+        <p>Setup automatic notifications for important deadlines and payroll tasks.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon custom-fields">
+          <mat-icon>edit</mat-icon>
+        </div>
+        <h3>Custom Fields</h3>
+        <p>Add custom fields to employee profiles to store specific company data.</p>
+      </div>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card class="help-card">
+  <div class="help-section">
+    <h2>Find Help & Resources</h2>
+    <p class="help-subtitle">Your One-stop destination for support. Find answers, read guides, or get in touch with our team.</p>
+    <div class="help-cards">
+      <div class="help-card-item">
+        <div class="help-icon">
+          <mat-icon>help_outline</mat-icon>
+        </div>
+        <h3>FAQs</h3>
+        <p>Find quick answers to common questions.</p>
+      </div>
+      <div class="help-card-item">
+        <div class="help-icon">
+          <mat-icon>menu_book</mat-icon>
+        </div>
+        <h3>Guides</h3>
+        <p>In-depth articles to help you get started.</p>
+      </div>
+      <div class="help-card-item">
+        <div class="help-icon">
+          <mat-icon>support_agent</mat-icon>
+        </div>
+        <h3>Contact Support</h3>
+        <p>Talk to our friendly team for personal help.</p>
+      </div>
+    </div>
+  </div>
+</mat-card>
+</ng-container>
+
+<!-- Employee/Manager Dashboard View -->
+<ng-container *ngIf="!isAdminOrHR">
+<div class="employee-dashboard-container">
+  <div class="dashboard-content">
+    <!-- Profile Card -->
+    <mat-card class="profile-card">
+      <mat-card-content>
+        <div class="profile-info">
+          <img [src]="employeePhoto" alt="Profile" class="profile-image" onerror="this.src='assets/img/user_profile_.jpg'">
+          <div class="profile-details">
+            <h2 class="profile-name">{{ userName }}</h2>
+            <p class="profile-designation">{{ designation }}</p>
+            <p class="profile-email">{{ userEmail }}</p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Basic Details Card -->
+    <mat-card class="details-card">
+      <mat-card-header>
+        <mat-card-title>Basic Details</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="detail-row">
+          <span class="detail-label">Name:</span>
+          <span class="detail-value">{{ userName }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Code:</span>
+          <span class="detail-value">{{ employeeCode }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Designation:</span>
+          <span class="detail-value">{{ designation }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Role:</span>
+          <span class="detail-value">{{ role }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Company Details Card -->
+    <mat-card class="details-card">
+      <mat-card-header>
+        <mat-card-title>Company Details</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="detail-row">
+          <span class="detail-label">Department:</span>
+          <span class="detail-value">{{ department }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Company:</span>
+          <span class="detail-value">{{ companyName }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Branch:</span>
+          <span class="detail-value">{{ branchName }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Quick Links Card -->
+    <mat-card class="quick-links-card">
+      <mat-card-header>
+        <mat-card-title>Quick Links</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="quick-links-list">
+          <a class="quick-link-item" routerLink="/employeeSelfService/leave-management">
+            <mat-icon>check_circle</mat-icon>
+            <span>Leave Request</span>
+          </a>
+          <a class="quick-link-item" routerLink="/employeeSelfService/salary&Tax">
+            <mat-icon>check_circle</mat-icon>
+            <span>Salary Slips</span>
+          </a>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+</ng-container>
+

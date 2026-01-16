@@ -1,18 +1,37 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import { TenantInterceptor } from '../../../projects/login/src/app/_helpers/tenant-interceptor';
 import { SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import {
   GoogleLoginProvider,
   FacebookLoginProvider,
 } from '@abacritt/angularx-social-login';
 import { routes } from './app.routes';
+import { ErrorInterceptor } from './_helpers/error-interceptor';
+import { LoaderInterceptor } from './loader/loader.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
+
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TenantInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {

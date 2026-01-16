@@ -1,0 +1,74 @@
+<div class="profile" style="background-color: #e4eaf4;">
+  <div class="header-container">
+    <h2 class="custom-header"><b>We're glad to see you back</b></h2>
+  </div>
+
+  <ng-container *ngIf="user; else notLoggedIn">
+    <div class="profile-card">
+      <img 
+        class="profile-image" 
+        [src]="user.employeePhoto || 'assets/img/user_profile_.jpg'" 
+        alt="Profile Image"
+      />
+      <h3><b>Welcome, {{ user.firstName }} {{ user.lastName }}!</b></h3>
+      <p>📧 {{ user.email }}</p>
+      <!-- <button mat-menu-item routerLink="#" (click)="logout()">
+        Logout
+      </button> -->
+    </div>
+
+    <div class="details-card">
+      <h2 style="margin-top: 0px;">Basic Details</h2>
+      <form class="details-form">
+        <div class="form-row">
+          <div class="input-group">
+            <label>Name</label>
+            <input type="text" [value]="user.firstName + ' ' + user.lastName" readonly>
+          </div>
+          <div class="input-group">
+            <label>Code</label>
+            <input type="text" [value]="user.employeeCode" readonly>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Designation</label>
+            <input type="text" [value]="user.designationName" readonly>
+          </div>
+          <div class="input-group">
+            <label>Role</label>
+            <input 
+              type="text" 
+              [value]="user.employeeRoleLoginDtos?.[0]?.roleName || user.employeeRoleLoginDtos?.[0]?.roleDisplayName || 'N/A'" 
+              readonly
+            >
+          </div>
+        </div>
+
+        <h2 style="margin-top: 70px;margin-bottom: 10px;">Company Details</h2>
+        <div class="form-row">
+          <div class="input-group">
+            <label>Department</label>
+            <input type="text" [value]="user.departmentName" readonly>
+          </div>
+          <div class="input-group">
+            <label>Company</label>
+            <input type="text" [value]="user.companyName" readonly>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label>Branch</label>
+            <input type="text" [value]="user.branchName" readonly>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+
+  <ng-template #notLoggedIn>
+    <p>Please log in to view your profile information.</p>
+  </ng-template>
+</div>

@@ -22,10 +22,7 @@
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "projects/login/src/favicon.ico",
-              "projects/login/src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",
               "src/styles.scss"

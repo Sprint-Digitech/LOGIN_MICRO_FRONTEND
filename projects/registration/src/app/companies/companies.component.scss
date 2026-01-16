@@ -1,0 +1,154 @@
+// prev working
+// h2 {
+//   margin: 0;
+// }
+
+// .material-symbols-outlined {
+//   cursor: pointer;
+//   color: black;
+//   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+// }
+
+// svg {
+//   cursor: pointer;
+//   color: red;
+// }
+
+// table {
+//   width: 100%;
+//   table-layout: fixed;
+// }
+
+// mat-icon{
+//   overflow: unset !important;
+// }
+
+// /* Apply hover effect to the card */
+// .card {
+//   transition: box-shadow 0.3s ease, transform 0.3s ease;
+// }
+
+// .card:hover {
+//   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+//   transform: scale(1.02);
+// }
+
+// /* Style for the icons */
+// .info-icon,
+// .edit-icon,
+// .delete-icon {
+//   transition: color 0.3s ease;
+// }
+
+// .info-icon:hover {
+//   color: #007bff; /* Change color on hover */
+// }
+
+// .edit-icon:hover {
+//   color: #28a745; /* Change color on hover */
+// }
+
+// .delete-icon:hover {
+//   color: #dc3545; /* Change color on hover */
+// }
+/* Search bar container */
+.search-container {
+  display: flex;
+  align-items: center;
+  // background-color: #f0f4ff;
+  border-radius: 15px;
+  padding: 5px 10px;
+  width: 300px;
+}
+
+/* Input field styling */
+.search-container input {
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 16px;
+  width: 100%;
+  margin-left: 10px;
+}
+
+.search-container input::placeholder {
+  color: #aaa;
+}
+
+/* Icon in the search bar */
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 25%;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  color: #007bff;
+  cursor: pointer;
+}
+
+/* Add Currency button */
+.add-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Styles for the container */
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin-top: 5rem auto;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px #0000001a;
+}
+
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // margin: 5rem auto;
+  width: 100%; /* Full width */
+  margin-bottom: 16px;
+}
+ 
+.custom-header {
+  background-color: #0056f6;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 15px 20px;
+  text-align: center;
+  text-transform: none;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.custom-header:hover {
+  background-color: #003fb5; /* Darker blue on hover */
+}
+
+
+.records{
+  // margin-top: 100px;
+  // font-family: 'Times New Roman', Times, serif;
+  font-size: 16px;
+  margin-left: 12px;
+  margin-right: auto;
+  // font-weight: bold;
+  margin-top: 0px;
+  padding-bottom: 0;
+  margin-bottom: 5px;
+}

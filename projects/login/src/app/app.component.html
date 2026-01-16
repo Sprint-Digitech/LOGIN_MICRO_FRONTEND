@@ -73,7 +73,7 @@
           <div class="form-options">
             <mat-checkbox formControlName="rememberMe" style="color:#303030;">Remember
               me</mat-checkbox>
-            <a routerLink="/authentication/forgot-password">Forgot Password?</a>
+            <a routerLink="/register/forgot-password">Forgot Password?</a>
           </div>
 
           <button mat-raised-button class="login-button" type="submit" style="background-color: #006AFF; color:#FFFFFF; font-family: Poppins;"
@@ -82,7 +82,7 @@
           </button>
 
           <p class="create-account">
-            <a routerLink="/authentication/register"> or Create an account</a>
+            <a routerLink="/register"> or Create an account</a>
           </p>
 
           <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
