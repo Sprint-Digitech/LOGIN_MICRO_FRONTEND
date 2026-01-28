@@ -38,12 +38,12 @@ export class AddResponsibilityListComponent {
   }
   fetchResponsibilityById(id: string) {
     this.responsibilityService.getResponsibilityById(id).subscribe({
-      next: (response: any) => {
+      next: (response: any[]) => {
         const initialValues = {
-          responsibilityName: response.responsiblityName,
-          name: response.responsiblityDisplayName,
-          remarks: response.remark,
-          status: response.status,
+          responsibilityName: response[0].responsiblityName,
+          name: response[0].responsiblityDisplayName,
+          remarks: response[0].remark,
+          status: response[0].status,
         };
         this.initializeFormConfig(initialValues);
         this.addResponsibilityFormLoaded = true;

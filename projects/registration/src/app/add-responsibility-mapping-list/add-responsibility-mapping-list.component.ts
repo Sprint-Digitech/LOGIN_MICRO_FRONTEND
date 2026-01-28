@@ -142,8 +142,8 @@ export class AddResponsibilityMappingListComponent {
 
           const initialValues = {
             employeeName: employee?.employeeId || '',
-            responsibilityName: response.responsiblityArchMappingId || '',
-            status: response.status,
+            responsibilityName: response[0].responsiblityArchMappingId || '',
+            status: response[0].status,
           };
 
           if (employee) {

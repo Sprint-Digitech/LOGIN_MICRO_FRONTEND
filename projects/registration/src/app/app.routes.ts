@@ -116,35 +116,35 @@ export const routes: Routes = [
         component: ResponsibilityListComponent,
       },
       {
-        path: 'addResponsibilityList',
+        path: 'responsibility/addResponsibilityList',
         component: AddResponsibilityListComponent,
       },
       {
-        path: 'updateResponsibilityList',
+        path: 'responsibility/updateResponsibilityList',
         component: AddResponsibilityListComponent,
       },
       {
-        path: 'archResponsibilityMappingList',
+        path: 'responsibility/archResponsibilityMappingList',
         component: ResponsibilityArchMappingListComponent,
       },
       {
-        path: 'addArchResponsibilityMappingList',
+        path: 'responsibility/addArchResponsibilityMappingList',
         component: AddResponsibilityArchMappingListComponent,
       },
       {
-        path: 'updateArchResponsibilityMappingList',
+        path: 'responsibility/updateArchResponsibilityMappingList',
         component: AddResponsibilityArchMappingListComponent,
       },
       {
-        path: 'mappingResponsibilityList',
+        path: 'responsibility/mappingResponsibilityList',
         component: ResponsibilityMappingListComponent,
       },
       {
-        path: 'addMappingResponsibilityList',
+        path: 'responsibility/addMappingResponsibilityList',
         component: AddResponsibilityMappingListComponent,
       },
       {
-        path: 'updateMappingResponsibilityList',
+        path: 'responsibility/updateMappingResponsibilityList',
         component: AddResponsibilityMappingListComponent,
       },
     ],

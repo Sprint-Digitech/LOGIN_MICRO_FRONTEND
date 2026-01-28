@@ -22,7 +22,7 @@ export class ResponsibilityService {
   };
   //getbyId
   public getResponsibilityById = (id: string): Observable<any> => {
-    const route = `api/Responsblity/ResponsblityById?ResponsiblityMasterID=${id}`;
+    const route = `api/Responsibility/GetResponsibilities?responsiblityMasterID=${id}`;
     return this.http.get<any>(
       this.createCompleteRoute(route, this.environment.urlAddress),
     );
@@ -30,7 +30,7 @@ export class ResponsibilityService {
 
   // Create new responsibility
   public createResponsibility = (data: any): Observable<any> => {
-    const route = 'api/Responsblity/CreateResponsblity';
+    const route = 'api/Responsibility/CreateResponsibility';
     return this.http.post<any>(
       this.createCompleteRoute(route, this.environment.urlAddress),
       data,
@@ -39,7 +39,7 @@ export class ResponsibilityService {
 
   // Update responsibility
   public updateResponsibility = (data: any): Observable<any> => {
-    const route = 'api/Responsblity/ResponsblityUpdate';
+    const route = 'api/Responsibility/UpdateResponsibility';
     return this.http.put<any>(
       this.createCompleteRoute(route, this.environment.urlAddress),
       data,
@@ -54,7 +54,7 @@ export class ResponsibilityService {
   };
   // Get Responsibility Arch Mapping List
   public getResponsibilityArchMappingList = (): Observable<any[]> => {
-    const route = 'api/Responsblity/ResponsiblityArchMappingList';
+    const route = 'api/Responsibility/GetArchMappings';
     return this.http.get<any[]>(
       this.createCompleteRoute(route, this.environment.urlAddress),
     );
@@ -69,7 +69,7 @@ export class ResponsibilityService {
   };
   // Get Responsibility Arch Mapping By ID
   public getResponsibilityArchMappingById = (id: string): Observable<any> => {
-    const route = `api/Responsblity/ResponsiblityArchMappingById?ResponsibilityArchMappingID=${id}`;
+    const route = `api/Responsibility/GetArchMappings?responsibilityArchMappingID=${id}`;
     return this.http.get<any>(
       this.createCompleteRoute(route, this.environment.urlAddress),
     );
@@ -77,7 +77,7 @@ export class ResponsibilityService {
 
   // Create Responsibility Arch Mapping
   public createResponsibilityArchMapping = (data: any): Observable<any> => {
-    const route = 'api/Responsblity/CreateResponsiblityArchMapping';
+    const route = 'api/Responsibility/CreateArchMapping';
     return this.http.post<any>(
       this.createCompleteRoute(route, this.environment.urlAddress),
       data,
@@ -86,7 +86,7 @@ export class ResponsibilityService {
 
   // Update Responsibility Arch Mapping
   public updateResponsibilityArchMapping = (data: any): Observable<any> => {
-    const route = 'api/Responsblity/ResponsiblityArchMappingUpdate';
+    const route = 'api/Responsibility/UpdateArchMapping';
     return this.http.put<any>(
       this.createCompleteRoute(route, this.environment.urlAddress),
       data,
@@ -94,7 +94,7 @@ export class ResponsibilityService {
   };
   // Get Employee Responsibility Mapping List
   public getEmployeeResponsibilityMappingList = (): Observable<any[]> => {
-    const route = 'api/Responsblity/EmployeeResponsblityMappingList';
+    const route = 'api/Responsibility/GetEmployeeMappings';
     return this.http.get<any[]>(
       this.createCompleteRoute(route, this.environment.urlAddress),
     );
@@ -113,7 +113,7 @@ export class ResponsibilityService {
   public getEmployeeResponsibilityMappingById = (
     id: string,
   ): Observable<any> => {
-    const route = `api/Responsblity/EmployeeResponsblityMappingById?EmployeeResponsblityMappingID=${id}`;
+    const route = `api/Responsibility/GetEmployeeMappings?employeeResponsblityMappingID=${id}`;
     return this.http.get<any>(
       this.createCompleteRoute(route, this.environment.urlAddress),
     );
@@ -121,7 +121,7 @@ export class ResponsibilityService {
 
   // Create Employee Responsibility Mapping
   public createEmployeeResponsibilityMapping = (data: any): Observable<any> => {
-    const route = 'api/Responsblity/CreateEmployeeResponsblityMapping';
+    const route = 'api/Responsibility/CreateEmployeeMapping';
     return this.http.post<any>(
       this.createCompleteRoute(route, this.environment.urlAddress),
       data,
@@ -130,7 +130,7 @@ export class ResponsibilityService {
 
   // Update Employee Responsibility Mapping
   public updateEmployeeResponsibilityMapping = (data: any): Observable<any> => {
-    const route = 'api/Responsblity/EmployeeResponsblityMappingUpdate';
+    const route = 'api/Responsibility/UpdateEmployeeMapping';
     return this.http.put<any>(
       this.createCompleteRoute(route, this.environment.urlAddress),
       data,

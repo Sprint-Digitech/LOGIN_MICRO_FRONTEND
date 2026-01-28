@@ -47,10 +47,10 @@ export class AddResponsibilityArchMappingListComponent {
     // Use forkJoin to load all data simultaneously
     forkJoin({
       departments: this.service.get(`api/Department/DepartmentList`),
-      branches: this.service.get('api/CompanyBranch/CompanyBranchList'),
+      branches: this.service.get('api/company-branch/GetCompanyBranch'),
       designations: this.service.get(`api/Designation/DesignationList`),
       responsibilities: this.responsibilityService.getResponsibilityList(
-        'api/Responsblity/ResponsblityList',
+        'api/Responsibility/GetResponsibilities',
       ),
     }).subscribe({
       next: (results) => {
@@ -228,7 +228,7 @@ export class AddResponsibilityArchMappingListComponent {
 
   loadResponsibilities() {
     this.responsibilityService
-      .getResponsibilityList('api/Responsblity/ResponsblityList')
+      .getResponsibilityList('api/Responsibility/GetResponsibilities')
       .subscribe({
         next: (data: any[]) => {
           console.log('responsibilities', data);
