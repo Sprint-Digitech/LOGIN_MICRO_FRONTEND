@@ -1,0 +1,22 @@
+<div class="main" style="margin-top: 55px;">
+  <div class="right-section">
+    <mat-card class="login-card">
+      <mat-card-content>
+        <lib-add-update-form 
+          *ngIf="addCompanyConfig" 
+          [config]="addCompanyConfig">
+        </lib-add-update-form>
+
+        <p class="create-account text-center mt-3">
+          <a routerLink="/register" style="color: #006AFF; cursor: pointer; text-decoration: underline;">
+            or Create a New Company
+          </a>
+        </p>
+
+        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+          {{ error }}
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

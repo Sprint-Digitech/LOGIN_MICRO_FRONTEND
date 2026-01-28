@@ -1,0 +1,38 @@
+<div class="main">
+  <!-- Map Roles Section -->
+  <div class="map-roles-section">
+    <lib-add-update-form *ngIf="editRoleFormLoaded" [config]="mapRolesFormConfig"></lib-add-update-form>
+  </div>
+
+  <!-- Select Roles Section -->
+  <div class="select-roles-section">
+    <h2 class="section-title">Select Menus</h2>
+    <div class="select-all-container">
+      <mat-checkbox (change)="toggleSelectAll($event.checked)" [checked]="isAllSelected()">
+        Select All
+      </mat-checkbox>
+    </div>
+    <div class="menu-categories">
+      <ng-container *ngFor="let category of groupedMenuCategories">
+        <div class="menu-category">
+          <div class="category-header">
+            <mat-checkbox 
+              [checked]="isCategoryAllSelected(category)" 
+              (change)="toggleCategoryAll(category, $event.checked)">
+            </mat-checkbox>
+            <h3 class="category-title">{{ category.categoryName }}</h3>
+          </div>
+          <div class="menu-items">
+            <div *ngFor="let menu of category.menus" class="menu-item">
+              <mat-checkbox 
+                [checked]="menu.access" 
+                (change)="toggleMenuAccess(menu)">
+                {{ menu.menuDisplayName || menu.menuName }}
+              </mat-checkbox>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

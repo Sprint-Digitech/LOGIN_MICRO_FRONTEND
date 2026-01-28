@@ -1,0 +1,43 @@
+<!-- <div class="main" style="background-color: #e4eaf4;width:100%;">
+  <div class="header-container">
+    <h2 class="custom-header">Add Roles</h2>
+  </div>
+
+  <div class="container mat-elevation-z1">
+    <h6 class="mat-headline-4 text-center" style="padding-bottom: 10px;">Role Master</h6>
+    <form class="source-form" [formGroup]="addRolesForm" (ngSubmit)="addRole()">
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="e.g., HR , Admin" formControlName="roleName">
+      </mat-form-field>
+      <lib-required-nemo [control]="addRolesForm.get('roleName')" label="Role Name"></lib-required-nemo>
+      <lib-table-nemo1 [control]="addRolesForm.get('roleName')" label="Role name"></lib-table-nemo1>
+ -->
+      <!-- table nemo 1 for invalid char and no. -->
+      <!-- <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Display Name</mat-label>
+        <input matInput placeholder="" formControlName="roleDisplayName">
+      </mat-form-field>
+      <lib-required-nemo [control]="addRolesForm.get('roleDisplayName')" label=" Display Name"></lib-required-nemo>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Remarks</mat-label>
+        <input matInput placeholder="" formControlName="remarks">
+      </mat-form-field>
+      <lib-required-nemo [control]="addRolesForm.get('remarks')" label="Remarks"></lib-required-nemo>
+
+
+    </form>
+    <button type="submit" [disabled]="addRolesForm.invalid" class="btn btn-primary w-50" (click)="addRole()">
+      Submit
+    </button>
+    <button type="button" class="btn btn-danger" style="margin-left: 12px;width: 46%;" (click)="goBack()">
+      Cancel
+    </button>
+  </div>
+
+</div> -->
+<div class="main" style="margin-top: 55px;">
+  <lib-add-update-form *ngIf="addRolesFormLoaded" [config]="addRolesFormConfig"></lib-add-update-form>
+</div>

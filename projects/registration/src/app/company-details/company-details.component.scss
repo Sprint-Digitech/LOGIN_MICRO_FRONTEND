@@ -1,0 +1,180 @@
+*{
+  font-family: 'Poppins'!important;
+}
+:host {
+  display: block !important;
+  overflow: visible !important;
+  position: relative;
+  width: 100%;
+  min-height: auto;
+  height: auto;
+}
+
+::ng-deep router-outlet + * {
+  overflow: visible !important;
+}
+
+h2 {
+  margin: 0;
+}
+
+.material-symbols-outlined {
+  cursor: pointer;
+  color: black;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+svg {
+  cursor: pointer;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 60px auto 20px auto;
+  overflow: visible !important;
+  position: relative;
+  z-index: 1;
+  padding: 0;
+  display: block;
+  visibility: visible;
+}
+
+// Company Details Section
+.company-details-card {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 5px 10px;
+  box-shadow: none;
+  border: none;
+  overflow: visible;
+  position: relative;
+  display: block;
+  visibility: visible;
+  min-height: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.company-details-header {
+  margin-bottom: 15px;
+  display: block;
+  visibility: visible;
+  position: relative;
+  z-index: 1;
+  
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #303030;
+    margin: 0 0 15px 0;
+    padding: 0;
+    display: block;
+    visibility: visible;
+    opacity: 1;
+    line-height: 1.5;
+  }
+}
+
+.company-details-body {
+  display: block;
+  visibility: visible;
+  position: relative;
+  width: 100%;
+  
+  .row {
+    display: flex;
+    row-gap: 15px;
+    width: 100%;
+    flex-wrap: wrap;
+    
+    .col {
+      // flex: 1;
+      min-width: 236px;
+    }
+  }
+
+  .detail-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    width: 100%;
+
+    .detail-label {
+      min-width: auto;
+      margin-right: 8px;
+      color: #303030;
+      font-size: 14px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-weight: 400;
+    }
+
+    .detail-value {
+      color: #303030;
+      font-size: 14px;
+      flex: 1;
+      min-width: 0;
+      font-weight: 400;
+    }
+  }
+}
+
+
+// Back Button
+.back-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.back-btn {
+  background-color: #000;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: sans-serif;
+
+  &:hover {
+    background-color: #333;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .company-details-body .row {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .branches-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .branches-action-bar {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+
+    .search-container {
+      width: 100%;
+    }
+  }
+
+  .pagination-container {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+
+  .pagination-left,
+  .pagination-right {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,13 @@
+
+<div class="main" style="margin-top: 55px;">
+  <lib-add-update-form *ngIf="addBranchFormLoaded && !showCurrencyError" [config]="addBranchFormConfig"
+    [formGroup]="addBranchForm"></lib-add-update-form>
+  <div *ngIf="showCurrencyError" style="padding: 20px; text-align: center;">
+    <div
+      style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 20px; margin: 20px auto; max-width: 500px;">
+      <h3 style="color: #856404;">⚠️ No Active Currencies</h3>
+      <p style="color: #856404;">No active currencies available. Please activate at least one currency before adding a
+        branch.</p>
+    </div>
+  </div>
+</div>

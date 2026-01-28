@@ -1,0 +1,60 @@
+<div class="container" style="overflow: visible !important; min-height: auto !important; margin-top: 60px !important;">
+  <div class="col" style="margin: 0 0 0 0; overflow: visible !important; min-height: auto !important;">
+    <!-- Company Details Section -->
+    <div class="row" style="overflow: visible !important; min-height: auto !important;">
+      <div class="col mb-4" style="overflow: visible !important; min-height: auto !important;">
+        <div class="company-details-card" style="overflow: visible !important; min-height: auto !important;">
+          <div class="company-details-header">
+            <h2><b>Company Details</b></h2>
+          </div>
+          <div class="company-details-body" *ngIf="details">
+            <div class="row">
+              <div class="col">
+                <div class="detail-row">
+                  <div class="detail-label"><b>Company Name:</b></div>
+                  <div class="detail-value">{{ details.companyName }}</div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="detail-row">
+                  <div class="detail-label"><b>Industry:</b></div>
+                  <div class="detail-value">{{ details.industry }}</div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="detail-row">
+                  <div class="detail-label"><b>Date Format:</b></div>
+                  <div class="detail-value">{{ details.dateFormat }}</div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="detail-row">
+                  <div class="detail-label"><b>Date field Separator:</b></div>
+                  <div class="detail-value">{{ details.dateFieldSeperator }}</div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="detail-row">
+                  <div class="detail-label"><b>Status:</b></div>
+                  <div class="detail-value">{{ details.status ? "Active" : "Not Active" }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Branches Section -->
+    <lib-nemo-reusable-tbl [searchResultTitle]="'Branches'" [showAddButton]="true" [addButtonLabel]="'Add Branch'"
+      (onAdd)="addCompanyDetail()" [columns]="columns" [dataSource]="dataArray" [rowsPerPage]="40" [tableWidth]="'100%'"
+      (editAction)="onEditRow($event)" (deleteAction)="deleteBranch($event)" (detailAction)="onDetailRow($event)"
+      [showDeleteOption]="false" [showEditOption]="true" [showDetailsOption]="onCompanyDetail" [showSearch]="true">
+    </lib-nemo-reusable-tbl>
+
+    <!-- Back Button -->
+    <div class="back-button-container">
+      <button class="back-btn" (click)="goBack()">Back</button>
+    </div>
+  </div>
+</div>

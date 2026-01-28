@@ -21,7 +21,7 @@ export class CompaniesComponent implements OnInit, OnDestroy {
   public companies: any;
   public dataSource: any[] = [];
   public companyList: any[] = [];
-  onDeleteComapny: boolean = true;
+  onDeleteComapny: boolean = false;
   onDetailCompany: boolean = true;
   private routerSubscription?: Subscription;
   private lastLoadedUrl?: string;
@@ -42,7 +42,7 @@ export class CompaniesComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private cacheService: HttpCacheService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
@@ -86,7 +86,7 @@ export class CompaniesComponent implements OnInit, OnDestroy {
 
     // Always fetch fresh data
     this.getCompanies();
-    this.onDeleteComapny = true;
+    this.onDeleteComapny = false;
     this.onDetailCompany = true;
   }
 
@@ -108,7 +108,7 @@ export class CompaniesComponent implements OnInit, OnDestroy {
 
     // Add X-No-Cache header to bypass HTTP cache and ensure fresh data
     const headers = new HttpHeaders().set('X-No-Cache', 'true');
-    const apiAddress: string = 'api/Company/CompanyList';
+    const apiAddress: string = 'api/company-branch/GetCompany';
     this.service.getCompany(apiAddress, headers).subscribe({
       next: (com: any[]) => {
         this.companyList = com
@@ -134,8 +134,8 @@ export class CompaniesComponent implements OnInit, OnDestroy {
     if (searchTerm) {
       this.dataSource = this.companyList.filter((item) =>
         Object.values(item).some((value) =>
-          String(value).toLowerCase().includes(searchTerm)
-        )
+          String(value).toLowerCase().includes(searchTerm),
+        ),
       );
     } else {
       this.dataSource = [...this.companyList]; // Reset to original data
@@ -152,7 +152,7 @@ export class CompaniesComponent implements OnInit, OnDestroy {
         'Delete Company',
         'Are you sure you want to delete this company?',
         'Delete',
-        'Cancel'
+        'Cancel',
       )
       .afterClosed()
       .subscribe((res) => {
@@ -161,7 +161,7 @@ export class CompaniesComponent implements OnInit, OnDestroy {
             .delete(`api/Company/DeleteCompany?guidCompanyId=${row.companyId}`)
             .subscribe(() => {
               this.notificationService.showSuccess(
-                'Company deleted successfully'
+                'Company deleted successfully',
               );
               this.getCompanies();
             });

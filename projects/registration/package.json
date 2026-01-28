@@ -26,7 +26,7 @@
     "@angular/router": "^19.0.0",
     "@fovestta2/nemo-reusable-tbl-fovestta": "^1.0.3",
     "@fovestta2/validation-engine": "^1.0.4",
-    "@fovestta2/web-angular": "^1.0.17",
+    "@fovestta2/web-angular": "^1.0.24",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^17.0.0",
     "bootstrap": "^5.3.6",

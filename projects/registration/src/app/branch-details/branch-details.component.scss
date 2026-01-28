@@ -1,0 +1,1943 @@
+// @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+// @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+// // Container
+// * {
+//   font-family: Poppins !important;
+// }
+
+.container {
+  padding: 5px 10px;
+  min-height: 100vh;
+  border-radius: 7px;
+}
+
+h2 {
+  margin: 0;
+}
+
+// Page Title
+.page-title {
+  font-size: 20px;
+  font-weight: 700;
+  font-style: bold;
+  color: #303030;
+  margin-bottom: 6px;
+}
+
+// Branch Header Card
+.branch-header-wrapper {
+  position: sticky;
+  top: 50px;
+  z-index: 12;
+  background: #f2f2f2;
+  padding: 6px 10px 5px;
+}
+
+.branch-header-card {
+  background: white;
+  border-radius: 12px;
+  border: 0.5px solid #cfcfcf;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+// Branch Info Grid
+.branch-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px 16px;
+}
+
+.info-item {
+  display: flex;
+  gap: 5px;
+}
+
+.info-label {
+  font-size: 14px;
+  font-weight: 600;
+  font-style: bold;
+  color: #151d48;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #151d48;
+}
+
+// Sections Grid
+.sections-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  padding: 0 10px;
+}
+
+// Section Cards
+.section-card {
+  background: #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  overflow: hidden;
+  border: 0.5px solid #c5c5c5;
+  min-height: 20px;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    background-color: #040f1e;
+    color: white;
+    transform: translateY(-1px);
+  }
+}
+
+.section-card-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 8px;
+  background: transparent;
+
+  h3 {
+    font-size: 11px;
+    font-weight: 700;
+    font-style: bold;
+    color: #303030;
+    margin: 0;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  &:hover h3 {
+    color: white;
+  }
+}
+
+.section-card-header:hover {
+  background-color: transparent !important;
+}
+
+mat-icon {
+  font-family: "Material Icons" !important;
+}
+
+// Back Button
+.back-button-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 10px;
+}
+
+.back-button {
+  background: #303030;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  padding: 8px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  font-style: semi-bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #333;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Content Section
+.content-section {
+  animation: slideDown 0.3s ease;
+  padding: 0 10px;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    font-style: bold;
+    color: #303030;
+    margin: 0 0 4px;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.content-card {
+  background: white;
+  border-radius: 12px;
+  border: 0.5px solid #cfcfcf;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: visible; // Changed from hidden to allow dropdown overflow
+  position: relative; // Added for z-index context
+}
+
+.content-body {
+  padding: 10px;
+  overflow: visible; // Allow dropdown to overflow
+  position: relative; // Added for z-index context
+}
+
+// Address & Contact Container
+.address-contact-container {
+  width: 100%;
+  overflow: visible; // Allow dropdown to overflow
+  position: relative; // Added for z-index context
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+  }
+}
+
+//* ================= Address List ================= */
+.address-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.address-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.address-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  width: 100%;
+  overflow: visible; // Allow dropdown to overflow
+  position: relative; // Added for z-index context
+}
+
+/* ================= Grid ================= */
+.address-fields-layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.address-fields .status-field {
+  grid-column: 1 / -1;
+}
+
+.address-fields .status-field .radio-label {
+  display: inline-flex !important;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* ================= Form Fields ================= */
+.form-field {
+  min-width: 0;
+  overflow: visible; // Allow dropdown to overflow
+  position: relative; // Added for z-index context
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  input:not([type="radio"]),
+  select {
+    width: 100%;
+    height: 38px;
+    padding: 8px 12px;
+    border: 1px solid #8cbba8;
+    border-radius: 7px;
+    font-size: 14px;
+  }
+}
+
+.address-fields-layout .status-field {
+  grid-column: 1 / -1;
+}
+
+.address-fields-layout .status-field label {
+  font-weight: 500;
+  font-size: 14px;
+  color: #151d48;
+  margin-bottom: 10px;
+  display: block;
+
+  .pf-radio-group {
+    display: flex;
+    gap: 20px;
+    padding-top: 8px;
+    flex-wrap: nowrap !important;
+
+    .radio-label {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 12px !important;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #151d48;
+      margin: 0 24px 6px 0 !important;
+
+      input[type="radio"] {
+        margin: 0 8px 0 0 !important;
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+        accent-color: #0056f6;
+        flex-shrink: 0;
+      }
+
+      span {
+        user-select: none;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .statutory-section .pf-radio-group,
+  .statutory-section .radio-group {
+    gap: 1px !important;
+    flex-wrap: nowrap !important;
+
+    .radio-label {
+      display: inline-flex !important;
+      align-items: center;
+      margin-right: 24px !important;
+      gap: 12px !important;
+
+      input[type="radio"] {
+        margin: 0 8px 0 0 !important;
+      }
+    }
+  }
+
+  .status-field .radio-group {
+    gap: 1px !important;
+    flex-wrap: nowrap !important;
+
+    .radio-label {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 12px !important;
+      margin-right: 24px !important;
+
+      input[type="radio"] {
+        margin: 0 8px 0 0 !important;
+      }
+    }
+  }
+
+  // Requested label styling for generated attribute selectors
+  .radio-group[_ngcontent-ng-c658584929]
+    .radio-label[_ngcontent-ng-c658584929] {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+  }
+
+  // Force PF row radios to wrap and keep generous spacing
+  .pf-config-grid .radio-group {
+    gap: 1px !important;
+    flex-wrap: nowrap !important;
+
+    .radio-label {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 12px !important;
+      margin-right: 24px !important;
+
+      input[type="radio"] {
+        margin: 0 8px 0 0 !important;
+      }
+    }
+  }
+
+  // Force Status row radios inside Additional Statutory grid
+  .additional-statutory-grid .radio-group {
+    gap: 1px !important;
+    flex-wrap: nowrap !important;
+
+    .radio-label {
+      display: inline-flex !important;
+      align-items: center;
+      gap: 12px !important;
+      margin-right: 24px !important;
+
+      input[type="radio"] {
+        margin: 0 8px 0 0 !important;
+      }
+    }
+  }
+
+  // Force single row on all screen sizes
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(6, minmax(190, 1fr));
+    overflow-x: visible;
+  }
+
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    overflow-x: visible;
+  }
+
+  @media (max-width: 576px) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    overflow-x: visible;
+  }
+}
+
+/* ================= ABSOLUTE FINAL OVERRIDE ================= */
+
+/* PF / ESIC / STATUS – FORCE ONE ROW NO MATTER WHAT */
+:host ::ng-deep .pf-radio-group,
+:host ::ng-deep .status-field .radio-group,
+:host ::ng-deep .statutory-section .pf-radio-group,
+:host ::ng-deep .address-fields-layout .status-field .radio-group {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+}
+
+/* Radio label */
+:host ::ng-deep .pf-radio-group .radio-label,
+:host ::ng-deep .status-field .radio-group .radio-label {
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  margin: 0 !important;
+}
+
+/* Radio input */
+:host ::ng-deep .pf-radio-group input[type="radio"],
+:host ::ng-deep .status-field .radio-group input[type="radio"] {
+  flex-shrink: 0 !important;
+}
+
+.tax-deductor-fields {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  white-space: nowrap;
+  margin-bottom: 12px;
+  overflow-x: auto;
+
+  .form-field {
+    min-width: 0;
+
+    label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      height: 38px;
+      padding: 8px 12px;
+      border: 1px solid #8cbba8;
+      border-radius: 7px;
+      font-size: 14px;
+    }
+  }
+
+  .radio-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 8px;
+    flex-wrap: nowrap;
+    padding: 4px 0;
+    min-width: fit-content;
+
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #151d48;
+      white-space: nowrap;
+      flex-shrink: 0;
+      min-width: fit-content;
+
+      input[type="radio"] {
+        margin: 0;
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+        accent-color: #006aff;
+        flex-shrink: 0;
+      }
+
+      span {
+        user-select: none;
+        white-space: nowrap;
+        display: inline-block;
+        min-width: fit-content;
+      }
+    }
+  }
+}
+
+.tax-status-row {
+  width: 100%;
+  margin-bottom: 12px;
+
+  .form-field.status-field {
+    max-width: 300px;
+
+    label {
+      font-weight: 500;
+      font-size: 14px;
+      color: #151d48;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 1px;
+      align-items: center;
+      flex-wrap: nowrap;
+      padding: 4px 0;
+
+      .radio-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 1px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        color: #151d48;
+        white-space: nowrap;
+        flex-shrink: 0;
+
+        input[type="radio"] {
+          margin: 0;
+          cursor: pointer;
+          width: 18px;
+          height: 18px;
+          accent-color: #006aff;
+          flex-shrink: 0;
+        }
+
+        span {
+          user-select: none;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
+.statutory-fields {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  white-space: normal;
+  margin-bottom: 12px;
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+.leave-encashment-fields {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 12px !important;
+  width: 100% !important;
+  margin-bottom: 12px !important;
+}
+
+.leave-encashment-field {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+// Statutory Form Card
+.statutory-form-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #b3d9ff;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #151d48;
+    }
+
+    .form-control {
+      padding: 8px 12px;
+      height: 38px;
+      border: 1px solid #8cbba8;
+      border-radius: 7px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      background-color: white;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: none;
+        border-color: #0056f6;
+        box-shadow: 0 0 0 3px rgba(0, 86, 246, 0.1);
+      }
+    }
+  }
+}
+
+.radio-label span {
+  padding-left: 4px;
+  padding-right: 10px;
+}
+
+.statutory-section {
+  margin-bottom: 24px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+// Identification Numbers Grid (single row)
+.identification-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+// PF Configuration Grid (single row)
+.pf-config-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+  align-items: start;
+
+  .form-field {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-bottom: 8px;
+    }
+
+    .radio-group {
+      margin-top: 0;
+      flex-wrap: wrap !important;
+      gap: 1px !important;
+
+      .radio-label {
+        gap: 10px !important;
+        margin-right: 12px;
+
+        input[type="radio"] {
+          margin: 0 6px 0 0;
+        }
+      }
+    }
+  }
+}
+
+// Additional Statutory Details Grid (horizontal row with status)
+.additional-statutory-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr) auto;
+  gap: 16px;
+  align-items: start;
+
+  .status-field {
+    min-width: 140px;
+  }
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+
+    .status-field {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+
+    .status-field {
+      grid-column: 1;
+    }
+  }
+}
+
+// Add spacing for form fields with radio buttons in statutory section
+.statutory-section .form-field {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin-bottom: 8px;
+  }
+
+  .radio-group {
+    margin-top: 0;
+  }
+}
+
+// Overtime Configuration Styles
+.overtime-config-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.overtime-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+
+  .section-subtitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #303030;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+}
+
+.overtime-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+  white-space: nowrap;
+  overflow-x: auto;
+
+  .form-field {
+    min-width: 0;
+
+    label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    overflow-x: auto;
+  }
+
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.overtime-rates-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 0;
+  white-space: nowrap;
+  overflow-x: auto;
+  width: 50%;
+  margin: 0;
+  padding: 0;
+
+  .form-field {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+
+    label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+      padding: 0;
+      margin-bottom: 4px;
+    }
+
+    .rate-input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 0;
+      padding: 0;
+
+      .rate-prefix {
+        font-size: 14px;
+        color: #151d48;
+        font-weight: 500;
+        white-space: nowrap;
+        margin: 0;
+        padding: 0;
+        margin-right: 4px;
+      }
+
+      .rate-input {
+        flex: 0 0 auto;
+        width: 120px; // Match the width of OT Daily Limit fields (same as input-with-suffix inputs)
+        margin: 0;
+      }
+    }
+  }
+
+  @media (max-width: 1400px) {
+    grid-template-columns: 50% 50%;
+    width: 50%;
+    gap: 0;
+  }
+
+  @media (max-width: 992px) {
+    grid-template-columns: 50% 50%;
+    width: 50%;
+    gap: 0;
+  }
+
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+}
+
+.overtime-remarks-grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 12px;
+  align-items: start;
+  white-space: nowrap;
+  overflow-x: auto;
+  width: 50%;
+  margin: 0;
+  padding: 0;
+
+  .form-field {
+    padding: 0;
+    margin: 0;
+
+    .form-control {
+      width: 150px;
+    }
+
+    .input-with-suffix {
+      width: 150px;
+
+      .form-control {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+
+    .form-field {
+      padding: 0;
+
+      .form-control {
+        width: 100%;
+      }
+
+      .input-with-suffix {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.input-with-suffix {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .form-control {
+    padding-right: 45px;
+  }
+
+  .input-suffix {
+    position: absolute;
+    right: 12px;
+    font-size: 14px;
+    color: #666;
+    pointer-events: none;
+    font-weight: 500;
+  }
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+  padding: 8px 12px;
+  font-family: inherit;
+}
+
+// Form Field
+.form-field {
+  display: flex;
+  flex-direction: column;
+  // gap: 8px;
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #151d48;
+
+    .required {
+      color: #dc3545;
+      margin-left: 2px;
+    }
+  }
+
+  .form-control {
+    padding: 8px 12px;
+    height: 38px;
+    border: 1px solid #8cbba8;
+    border-radius: 7px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: white;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: #8cbba8;
+      box-shadow: 0 0 0 3px rgba(0, 86, 246, 0.1);
+    }
+
+    &:disabled {
+      background-color: #f5f5f5;
+      cursor: not-allowed;
+    }
+
+    &[readonly] {
+      background-color: #f5f5f5;
+      cursor: default;
+    }
+  }
+
+  select.form-control {
+    cursor: pointer;
+  }
+}
+
+// Action Buttons
+.action-btn {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &.save-btn {
+    background: #006aff;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: #0045a6;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 106, 255, 0.3);
+    }
+
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+
+  &.cancel-btn {
+    background: #6c757d;
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: #5a6268;
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// Form Actions
+.form-actions {
+  display: flex;
+  gap: 15px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 20px;
+  justify-content: flex-end;
+}
+
+// Icon Buttons
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  background: white;
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  &.add-btn {
+    background: white;
+  }
+
+  &.delete-btn {
+    background: white;
+  }
+}
+
+// Existing styles for accordion panels
+mat-tab-group {
+  position: relative;
+  z-index: 0;
+}
+
+.material-symbols-outlined {
+  cursor: pointer;
+  color: black;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+}
+
+svg {
+  cursor: pointer;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.details {
+  margin-top: 10px !important;
+}
+
+/* Search bar container */
+.search-container {
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  padding: 5px 10px;
+  width: 300px;
+}
+
+/* Input field styling */
+.search-container input {
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 16px;
+  width: 100%;
+  margin-left: 10px;
+}
+
+.search-container input::placeholder {
+  color: #aaa;
+}
+
+/* Icon in the search bar */
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 25%;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  color: #007bff;
+  cursor: pointer;
+}
+
+/* Add Currency button */
+.add-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Styles for the container */
+.container1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin-top: 5rem auto;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px #0000001a;
+}
+
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5rem auto;
+  width: 100%;
+  /* Full width */
+}
+
+.custom-header {
+  background-color: #0056f6;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 15px 20px;
+  text-align: center;
+  text-transform: none;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.custom-header:hover {
+  background-color: #003fb5;
+  /* Darker blue on hover */
+}
+
+.table-container {
+  width: 100vw;
+  /* Full viewport width */
+  max-width: 100%;
+  /* Ensures it does not exceed parent width */
+  overflow-x: auto;
+  /* Enables horizontal scrolling */
+  overflow-y: hidden;
+  /* Hides vertical scroll */
+  white-space: nowrap;
+  /* Prevents column wrapping */
+  display: flex;
+  padding-bottom: 2px;
+  /* Reduces scrollbar distance */
+}
+
+/* Ensuring the table expands fully */
+.table-container table {
+  width: 100%;
+  min-width: 100%;
+  border-collapse: collapse;
+}
+
+// Card utilities
+.card {
+  border: none;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.border-0 {
+  border: none;
+}
+
+.row {
+  margin: 0;
+}
+
+// Responsive Design
+@media only screen and (max-width: 1100px) {
+  .sections-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .branch-info-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .sections-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  .sections-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .branch-header-wrapper {
+    top: 55px;
+    padding: 6px 0 10px;
+  }
+
+  .branch-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .branch-header-card {
+    padding: 18px;
+  }
+
+  .page-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .section-card-header {
+    padding: 12px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .branch-info-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .info-label {
+    font-size: 11px;
+  }
+
+  .info-value {
+    font-size: 13px;
+  }
+}
+
+// Weekly Off Configuration Table Styles
+.weekly-off-table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.weekly-off-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  thead {
+    background-color: #f5f5f5;
+
+    th {
+      padding: 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 14px;
+      color: #151d48;
+      border-bottom: 2px solid #e0e0e0;
+      white-space: nowrap;
+
+      &:first-child {
+        padding-left: 20px;
+      }
+
+      &:last-child {
+        padding-right: 20px;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid #f0f0f0;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #fafafa;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      padding: 16px;
+      vertical-align: middle;
+
+      &:first-child {
+        padding-left: 20px;
+      }
+
+      &:last-child {
+        padding-right: 20px;
+      }
+    }
+  }
+}
+
+.table-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #151d48;
+  background-color: #f9f9f9;
+  cursor: not-allowed;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #006aff;
+  }
+}
+
+.table-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #151d48;
+  background-color: white;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #006aff;
+  }
+
+  &:hover {
+    border-color: #b0b0b0;
+  }
+}
+
+.table-radio-group {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+
+  .table-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #151d48;
+    white-space: nowrap;
+
+    input[type="radio"] {
+      margin: 0;
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      border: 2px solid #8e8a8a;
+      border-radius: 50%;
+      background-color: white;
+      position: relative;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+
+      &:checked {
+        border-color: #006aff;
+        background-color: #006aff;
+      }
+
+      &:not(:checked) {
+        border-color: #8e8a8a;
+        background-color: white;
+      }
+    }
+
+    span {
+      user-select: none;
+    }
+  }
+}
+
+// Responsive adjustments for Weekly Off Table
+@media (max-width: 768px) {
+  .weekly-off-table-container {
+    overflow-x: auto;
+  }
+
+  .weekly-off-table {
+    min-width: 600px;
+
+    thead th,
+    tbody td {
+      padding: 12px;
+      font-size: 13px;
+    }
+  }
+
+  .table-radio-group {
+    gap: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Required field indicator */
+.required {
+  color: #f44336;
+  margin-left: 4px;
+  font-weight: bold;
+}
+
+/* Error message styling */
+.error {
+  color: #f44336;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+/* Form field styling */
+// .form-field {
+//   // margin-bottom: 20px;
+// }
+
+.form-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px 12px;
+  height: 38px;
+  border: 1px solid #8cbba8;
+  border-radius: 7px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #8cbba8;
+  box-shadow: 0 0 0 2px rgba(140, 187, 168, 0.1);
+}
+
+.form-control[readonly] {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+// Ensure all input fields in contact section have consistent styling
+.address-fields input[type="text"],
+.address-fields input[type="email"],
+.address-fields input[type="tel"],
+.address-fields .form-control {
+  width: 100%;
+  height: 38px;
+  padding: 8px 12px;
+  border: 1px solid #8cbba8;
+  border-radius: 7px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.address-fields input:focus,
+.address-fields .form-control:focus {
+  outline: none;
+  border-color: #8cbba8;
+  box-shadow: 0 0 0 2px rgba(140, 187, 168, 0.1);
+}
+
+// Ensure employee dropdown input matches and can overflow
+::ng-deep app-employee-dropdown {
+  position: relative;
+  z-index: auto;
+
+  .form-field-wrapper {
+    position: relative;
+    z-index: 1;
+
+    &.dropdown-open {
+      z-index: 1000; // Increase z-index only when dropdown is visible
+    }
+  }
+
+  .dropdown-container {
+    position: relative;
+    z-index: auto;
+  }
+
+  .form-control {
+    width: 100%;
+    height: 38px;
+    padding: 8px 12px;
+    border: 1px solid #8cbba8 !important;
+    border-radius: 7px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background-color: white;
+    box-sizing: border-box;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: #8cbba8 !important;
+    box-shadow: 0 0 0 2px rgba(140, 187, 168, 0.1);
+  }
+
+  .custom-dropdown {
+    z-index: 1000 !important; // Reasonable z-index
+    position: absolute !important;
+  }
+}
+
+/* Mat-select full width */
+.full-width {
+  width: 100%;
+}
+
+/* Radio group styling */
+.radio-group {
+  display: flex;
+  gap: 1px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radio-label input[type="radio"] {
+  cursor: pointer;
+}
+
+// Contact Person Field - Match width with other fields
+.contact-person-field {
+  .mat-mdc-form-field,
+  ::ng-deep .mat-mdc-form-field {
+    width: 100% !important;
+  }
+
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    width: 100% !important;
+    background-color: white;
+  }
+
+  ::ng-deep .mat-mdc-form-field-flex {
+    height: 38px !important;
+    align-items: center;
+  }
+
+  ::ng-deep .mat-mdc-form-field-infix {
+    width: 100% !important;
+    padding: 0 !important;
+    border-top: 0 !important;
+    min-height: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+  }
+
+  ::ng-deep .mat-mdc-form-field-wrapper {
+    padding-bottom: 0 !important;
+  }
+
+  ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  ::ng-deep input.mat-mdc-input-element,
+  ::ng-deep input.mat-input-element {
+    width: 100% !important;
+    padding: 8px 12px !important;
+    height: 38px !important;
+    line-height: normal !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+    font-size: 14px !important;
+  }
+
+  ::ng-deep .mat-mdc-form-field-bottom-align {
+    display: none;
+  }
+
+  // Add custom border
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  ::ng-deep .mat-focused .mat-mdc-text-field-wrapper {
+    border-color: #0056f6;
+    box-shadow: 0 0 0 3px rgba(0, 86, 246, 0.1);
+  }
+}
+
+:host ::ng-deep .mat-mdc-text-field-wrapper {
+  height: 38px;
+  padding-left: 5px !important;
+  padding-right: 0px !important;
+}
+
+:host
+  ::ng-deep
+  .mat-mdc-text-field-wrapper.mdc-text-field--outlined
+  .mat-mdc-form-field-infix {
+  padding-top: 8px;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+// Autocomplete panel styling
+::ng-deep .mat-mdc-autocomplete-panel,
+::ng-deep .mat-autocomplete-panel {
+  max-height: 300px !important;
+  margin-top: 4px !important;
+}
+
+::ng-deep .mat-mdc-option,
+::ng-deep .mat-option {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  height: auto !important;
+  padding: 10px 16px !important;
+  min-height: 48px;
+}
+
+::ng-deep .mat-mdc-option:hover,
+::ng-deep .mat-option:hover {
+  background-color: #f5f5f5 !important;
+}
+
+::ng-deep .mat-mdc-option.mat-selected,
+::ng-deep .mat-option.mat-selected {
+  background-color: #e3f2fd !important;
+}
+
+// Employee option in dropdown
+.employee-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.emp-code {
+  font-weight: 600;
+  color: #333;
+  font-size: 13px;
+  min-width: 90px;
+}
+
+.emp-separator {
+  color: #999;
+  font-weight: 500;
+}
+
+.emp-name {
+  color: #333;
+  font-size: 13px;
+  flex: 1;
+}
+
+// No results message
+.no-results {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  color: #666;
+  font-size: 13px;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: #999;
+  }
+}
+
+:host ::ng-deep mat-form-field.force-render-field .mat-mdc-floating-label {
+  display: none !important;
+}
+
+:host ::ng-deep mat-form-field.force-render-field {
+  width: 190px !important;
+  height: 38px !important;
+  min-height: 38px !important;
+
+  /* Hide notched parts for single box */
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    display: none !important;
+    border: none !important;
+  }
+
+  /* Input container exact height */
+  .mat-mdc-text-field-wrapper {
+    height: 38px !important;
+    padding: 0 !important;
+  }
+
+  /* Input field perfect size */
+  .mat-mdc-form-field-infix {
+    height: 38px !important;
+    // padding: 8px 12px !important;
+    text-align: left !important;
+  }
+
+  input.mat-mdc-input-element {
+    height: 24px !important;
+    line-height: 24px !important;
+    padding: 8px !important;
+    text-align: left !important;
+    font-size: 14px !important;
+  }
+}
+
+/* NORMAL STATE - Single perfect box */
+:host ::ng-deep mat-form-field.force-render-field .mdc-notched-outline {
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: #8cbba8 !important;
+  border-radius: 7px !important;
+  opacity: 1 !important;
+  height: 38px !important;
+  top: 0 !important;
+  inset: 0 !important;
+}
+
+/* FOCUS STATE - Blue border */
+:host
+  ::ng-deep
+  mat-form-field.force-render-field.mat-focused
+  .mdc-notched-outline {
+  border-width: 2px !important;
+  border-color: #8cbba8 !important;
+  opacity: 1 !important;
+}
+
+/* ERROR STATE - Red border */
+:host
+  ::ng-deep
+  mat-form-field.force-render-field.mat-form-field-invalid
+  .mdc-notched-outline {
+  border-width: 2px !important;
+  border-color: #f44336 !important;
+  opacity: 1 !important;
+}
+
+/* ERROR MESSAGES - Compact */
+:host ::ng-deep mat-form-field.force-render-field {
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none !important;
+    /* Hide error space to keep height 40px */
+  }
+}
+
+.mat-mdc-form-field-icon-suffix {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 40px !important;
+  margin: 0 !important;
+  padding: 0 4px !important;
+  flex-shrink: 0 !important;
+}
+
+// Custom Dropdown Styles (matching Add Employee CTC)
+.dropdown-container {
+  position: relative;
+  width: 100%;
+}
+
+.custom-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  margin-top: 2px;
+}
+
+.dropdown-item {
+  padding: 4px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s ease;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-item.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item.no-results {
+  color: #666;
+  cursor: default;
+  justify-content: center;
+  padding: 16px;
+}
+
+.dropdown-item.no-results:hover {
+  background-color: #fff;
+  color: #666;
+}
+
+.dropdown-item .employee-code {
+  font-weight: 600;
+  color: #0056f6;
+}
+
+.dropdown-item.active .employee-code {
+  color: #fff;
+}
+
+.dropdown-item .separator {
+  color: #666;
+  margin: 0 4px;
+}
+
+.dropdown-item.active .separator {
+  color: #fff;
+}
+
+.dropdown-item .employee-name {
+  color: #333;
+}
+
+.dropdown-item.active .employee-name {
+  color: #fff;
+}
+
+::ng-deep .form-container {
+  padding: 0px !important;
+}

@@ -1,0 +1,120 @@
+<!-- <div class="main" style="background-color: #e4eaf4; width: 100%;"> -->
+  <!-- <div class="header-container">
+    <h2 class="custom-header">Add Menu Master</h2>
+  </div>
+
+  <div class="container mat-elevation-z1">
+    <h6 class="mat-headline-4 text-center" style="padding-bottom: 10px;">Menu Master</h6>
+    <form class="source-form" [formGroup]="addmenuMasterForm" (ngSubmit)="sendData(addmenuMasterForm.value)"> -->
+
+      <!-- Row 1 -->
+      <!-- <div class="row">
+        <div class="col-6">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label> Name</mat-label>
+            <input matInput placeholder="" formControlName="menuName">
+          </mat-form-field>
+          <div class="mt-2">
+            <lib-required-nemo [control]="addmenuMasterForm.get('menuName')" label="Menu Name"></lib-required-nemo>
+          </div>
+        </div> -->
+        <!-- <div class="col-6">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Display Name</mat-label>
+            <input matInput placeholder="" formControlName="menuDisplayName">
+          </mat-form-field>
+          <div class="mt-2">
+            <lib-required-nemo [control]="addmenuMasterForm.get('menuDisplayName')"
+              label="menu Display Name"></lib-required-nemo>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- Row 2 -->
+      <!-- <div class="row">
+        <div class="col-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Parent Menu</mat-label>
+            <mat-select formControlName="menuHeader">
+              <mat-option value="" disabled>Choose...</mat-option>
+              <mat-option *ngFor="let menu of parentMenuList" [value]="menu.menuID">
+                {{ menu.menuName }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+          <!-- <mat-form-field appearance="outline">
+            <mat-label>Parent Menu</mat-label>
+            <input
+            matInput
+            formControlName="menuHeader"
+            placeholder=""
+          />
+             </mat-form-field> -->
+          <!-- <div class="mt-2">
+            <lib-required-nemo [control]="addmenuMasterForm.get('menuHeader')" label="menu Header"></lib-required-nemo>
+          </div>
+        </div> -->
+        <!-- <div class="col-6">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Path</mat-label>
+            <input matInput formControlName="menuType" placeholder="" />
+          </mat-form-field>
+          <div class="mt-2">
+            <lib-required-nemo [control]="addmenuMasterForm.get('menuType')" label="menuType"></lib-required-nemo>
+          </div>
+        </div>
+      </div> -->
+      <!-- Row 3 -->
+      <!-- <div class="row">
+        <div class="col-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <input matInput placeholder="" formControlName="remarks" /> -->
+          <!-- </mat-form-field>
+          <div class="mt-2">
+            <lib-required-nemo [control]="addmenuMasterForm.get('remarks')" label="remarks"></lib-required-nemo>
+          </div>
+        </div>
+        <div class="col-6"> -->
+          <!-- <div class="status-toggle d-flex align-items-center justify-content-between"
+            style="height: 56px; padding-right: 15px;">
+            <span class="status-label" style="color: #777171; font-size: 16px;">Status</span>
+            <mat-slide-toggle formControlName="status" color="primary"></mat-slide-toggle>
+          </div>
+          <div class="mt-2">
+            <lib-required-nemo [control]="addmenuMasterForm.get('status')" label="status"></lib-required-nemo>
+          </div>
+        </div>
+      </div> -->
+      <!-- Photo Upload Section -->
+      <!-- <div class="row">
+        <div class="col-md-12">
+          <label for="inputEmployeePhoto" class="col-form-label">Upload Icon <span class="mandatory">*</span></label>
+          <input style="padding: 12px;" formControlName="MenuIcon" type="file" #imgInput class="form-control"
+            id="inputEmployeePhoto" (change)="handleEmpImgInput($event)"
+            (blur)="addmenuMasterForm.get('icon')?.markAsTouched()" />
+          <p class="mandatory"
+            *ngIf="addmenuMasterForm.get('icon')?.errors?.['required'] && addmenuMasterForm.get('employeePhoto')?.touched">
+            Icon is required!
+          </p> -->
+          <!-- <img *ngIf="previewImage" [src]="previewImage" alt="Employee Photo" style="width: 200px; margin-top: 20px;" /> -->
+        <!-- </div>
+      </div> -->
+      <!-- Row 4 -->
+      <!-- Buttons -->
+      <!-- <div class="text-center mt-3">
+        <button type="button" [disabled]="addmenuMasterForm.invalid" class="btn btn-primary w-50"
+          (click)="sendData(addmenuMasterForm.value)">
+          Submit
+        </button>
+        <button type="button" class="btn btn-danger" style="margin-left: 12px; width: 46%;" (click)="goBack()">
+          Cancel
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div> -->
+<div class="main" style="margin-top: 55px;">
+  <lib-add-update-form *ngIf="addmenuMasterFormLoaded" [config]="addmenuMasterFormConfig"></lib-add-update-form>
+</div>

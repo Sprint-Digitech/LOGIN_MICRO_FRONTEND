@@ -1,0 +1,86 @@
+<div class="header" style="margin-top: 55px;">
+  <h1>Your Workspace</h1>
+  <p>Manage payroll for all your companies in one place </p>
+</div>
+
+<div class="cards-grid">
+  <mat-card class="stat-card" style="background-color: #E6F1FF;">
+    <mat-card-title>Total Companies</mat-card-title>
+    <mat-card-content>
+      <div class="number-img-wrapper">
+        <h2>{{overviewData.totalCompanies}}</h2>
+        <img src="/assets/img/office icon.png" alt="office icon" class="stat-icon">
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card" style="background-color: #E6FFF0;">
+    <mat-card-title>Payroll Complete</mat-card-title>
+    <mat-card-content>
+      <div class="number-img-wrapper">
+        <h2>{{overviewData.payrollComplete}}</h2>
+        <img src="/assets/img/checkbox.png" alt="checkbox" class="stat-icon">
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card" style="background-color: #FFF5E0;">
+    <mat-card-title>In Progress</mat-card-title>
+    <mat-card-content>
+      <div class="number-img-wrapper">
+        <h2>{{overviewData.inProgress}}</h2>
+        <img src="/assets/img/hourglass.png" alt="hour glass" class="stat-icon">
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="stat-card" style="background-color: #FFE2E0;">
+    <mat-card-title>Pending</mat-card-title>
+    <mat-card-content>
+      <div class="number-img-wrapper">
+        <h2>{{overviewData.pending}}</h2>
+        <img src="/assets/img/warning.png" alt="warning" class="stat-icon">
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="company">
+  <div class="left-section">
+    <h1>Your Companies</h1>
+  </div>
+  <div class="right-section">
+    <!-- <input type="text" placeholder="Filter"> -->
+    <!-- <lib-nemo-search-option (keyup)="handleSearch($event)"></lib-nemo-search-option> -->
+    <button mat-button style="background: #006AFF; color: #FFFFFF;" (click)="existingCompany()">
+      Add Existing Company
+    </button>
+  </div>
+</div>
+
+<div class="card-grid">
+  <mat-card *ngFor="let emp of companyData" class="start-card" (click)="openPayroll(emp)">
+    <div class="card-header-section">
+      <div class="icon-placeholder">
+        <img src="/assets/img/building.png" />
+      </div>
+      <div>
+        <mat-card-title>{{ emp.companyName || 'N/A' }}</mat-card-title>
+        <div class="employee-count">{{ emp.employeeCount || 0 }} employees</div>
+        <span class="status-pill" [ngClass]="emp.payStatus">
+          {{ emp.payStatus || 'Unknown' }}
+        </span>
+      </div>
+      <button mat-icon-button class="delete-btn" (click)="$event.stopPropagation(); deleteCompany(emp)"
+        aria-label="Remove company">
+        <img src="/assets/img/bin.png">
+      </button>
+    </div>
+    <mat-card-content>
+      <div class="info-row">
+        <div>Last payroll:</div>
+        {{ emp.payRunDate ? (emp.payRunDate | date:'mediumDate') : 'No Process Date' }}
+      </div>
+    </mat-card-content>
+    <a class="open-payroll-link" (click)="openPayroll(emp)">Open Payroll <span>&rarr;</span></a>
+  </mat-card>

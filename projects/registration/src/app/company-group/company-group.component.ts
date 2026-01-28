@@ -26,12 +26,12 @@ export class CompanyGroupComponent implements OnInit {
     private router: Router,
     private notificationService: NotificationService,
     private service: AccountService,
-    private dialogueService: DialogService
+    private dialogueService: DialogService,
   ) {}
 
   ngOnInit(): void {
     this.getCompanyGroup();
-    this.dltCompanyGroup = true;
+    this.dltCompanyGroup = false;
     this.detailCompanyGroup = false;
     this.editCompanyGroup = true;
   }
@@ -64,8 +64,8 @@ export class CompanyGroupComponent implements OnInit {
     if (searchTerm) {
       this.dataSource = this.originalData.filter((item) =>
         Object.values(item).some((value) =>
-          String(value).toLowerCase().includes(searchTerm)
-        )
+          String(value).toLowerCase().includes(searchTerm),
+        ),
       );
     } else {
       this.dataSource = [...this.originalData]; // Reset to original data
@@ -73,10 +73,10 @@ export class CompanyGroupComponent implements OnInit {
   }
 
   getCompanyGroup() {
-    this.service.get('api/CompanyGroup/CompanyGroupList').subscribe({
+    this.service.get('api/company-branch/GetCompanyGroup').subscribe({
       next: (response) => {
         this.originalData = response.sort((a, b) =>
-          a.companyGroupName.localeCompare(b.companyGroupName)
+          a.companyGroupName.localeCompare(b.companyGroupName),
         );
         this.originalData = response.map((item, index) => ({
           ...item,
@@ -108,13 +108,13 @@ export class CompanyGroupComponent implements OnInit {
         // Check if any company is using this group
         const companyUsing = await companies.find(
           (company) =>
-            company.companyGroup && company.companyGroup.id === row.id
+            company.companyGroup && company.companyGroup.id === row.id,
         );
 
         if (companyUsing) {
           // Group is being used by a company, prevent deletion
           this.notificationService.showError(
-            'Cannot delete this company group as it is being used by the company'
+            'Cannot delete this company group as it is being used by the company',
           );
         } else {
           // If not in use, proceed with deletion confirmation
@@ -123,19 +123,19 @@ export class CompanyGroupComponent implements OnInit {
               'Delete Company Group',
               'Are you sure you want to delete company group?',
               'Yes',
-              'No'
+              'No',
             )
             .afterClosed()
             .subscribe((res) => {
               if (res) {
                 this.service
                   .delete(
-                    `api/CompanyGroup/DeleteCompanyGroup?guidCompanyGroupId=${row.id}`
+                    `api/CompanyGroup/DeleteCompanyGroup?guidCompanyGroupId=${row.id}`,
                   )
                   .subscribe(() => {
                     this.getCompanyGroup();
                     this.notificationService.showSuccess(
-                      'Company Group deleted successfully'
+                      'Company Group deleted successfully',
                     );
                   });
               }

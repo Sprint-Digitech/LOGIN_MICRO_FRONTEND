@@ -1,0 +1,137 @@
+<div class="container" style="background-color: #f2f2f2; margin-top: 60px">
+  <div style="width: 100%">
+    <div>
+      <div class="row">
+        <h2 class="page-title">Branch Details</h2>
+        <!-- Branch Header Card -->
+        <div class="branch-header-wrapper">
+          <div class="card border-0 branch-header-card">
+            <div class="card-body">
+              <div class="branch-info-grid" *ngIf="details || branchDetails">
+                <div class="info-item" *ngIf="details">
+                  <span class="info-label">Company Name:</span>
+                  <span class="info-value">{{ details.companyName }}</span>
+                </div>
+                <div class="info-item" *ngIf="branchDetails">
+                  <span class="info-label">Branch:</span>
+                  <span class="info-value">{{ branchDetails.companyBranchName }}</span>
+                </div>
+                <div class="info-item" *ngIf="branchDetails">
+                  <span class="info-label">Status:</span>
+                  <span class="info-value">{{ branchDetails.status ? "Active" : "Not Active" }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Navigation Cards -->
+        <div class="sections-grid">
+          <!-- Contact Card -->
+          <div class="section-card" (click)="loadSection('contact')">
+            <div class="section-card-header">
+              <h3>CONTACT</h3>
+            </div>
+          </div>
+
+          <!-- Statutory Card -->
+          <div class="section-card" (click)="loadSection('statutory')">
+            <div class="section-card-header">
+              <h3>STATUTORY</h3>
+            </div>
+          </div>
+
+          <!-- Tax Deductor Card -->
+          <div class="section-card" (click)="loadSection('tax')">
+            <div class="section-card-header">
+              <h3>TAX DEDUCTOR</h3>
+            </div>
+          </div>
+
+          <!-- Address Card -->
+          <div class="section-card" (click)="loadSection('address')">
+            <div class="section-card-header">
+              <h3>ADDRESS</h3>
+            </div>
+          </div>
+
+          <!-- Overtime Configuration Card -->
+          <div class="section-card" (click)="loadSection('overtime')">
+            <div class="section-card-header">
+              <h3>OVERTIME CONFIG.</h3>
+            </div>
+          </div>
+
+          <!-- Leave Encashment Setup Card -->
+          <div class="section-card" (click)="loadSection('leaveEncashment')">
+            <div class="section-card-header">
+              <h3>LEAVE ENCASHMENT</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="back-button-container">
+          <button class="back-button" (click)="goBack()" title="Back">Back</button>
+        </div>
+
+        <hr style="background-color: #606060; margin-top: 20px" />
+
+        <!-- Dynamic Content Section -->
+        <div class="content-section" *ngIf="selectedSection" #contentSection>
+          <h2>{{ getSectionTitle(selectedSection) }}</h2>
+          <div class="content-card">
+            <div class="content-body">
+              <!-- Contact Section -->
+              <div *ngIf="selectedSection === 'contact'">
+<div *ngIf="contactDataLoaded">
+  <lib-add-update-form [config]="contactFormConfig"></lib-add-update-form>
+</div>
+              </div>
+
+              <!-- Statutory Section -->
+              <div *ngIf="selectedSection === 'statutory'">
+                <lib-add-update-form [config]="statutoryFormConfig"></lib-add-update-form>
+              </div>
+
+              <!-- Tax Deductor Section -->
+              <div *ngIf="selectedSection === 'tax'">
+                <lib-add-update-form [config]="taxDeductorFormConfig"></lib-add-update-form>
+              </div>
+
+              <!-- Address Section -->
+              <div *ngIf="selectedSection === 'address'">
+                <div class="address-contact-container">
+                  <div class="address-list">
+                    <div *ngIf="addressDataLoaded">
+                      <lib-add-update-form [config]="addressFormConfig"></lib-add-update-form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Overtime Configuration Section -->
+              <div *ngIf="selectedSection === 'overtime'">
+                <div class="address-contact-container">
+
+<div *ngIf="overtimeDataLoaded">
+      <lib-add-update-form [config]="overtimeFormConfig"></lib-add-update-form>
+    </div>
+
+                </div>
+              </div>
+
+              <!-- Leave Encashment Section -->
+              <div *ngIf="selectedSection === 'leaveEncashment'">
+                <div class="address-contact-container">
+                  <lib-add-update-form [config]="leaveEncashmentFormConfig"></lib-add-update-form>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
