@@ -1,0 +1,8 @@
+<div style="margin-top: 60px;">
+    <ng-container *ngIf="formConfig">
+      <lib-add-update-form 
+        [config]="formConfig" 
+        (validationError)="handleValidationError($event)">
+      </lib-add-update-form>
+    </ng-container>
+</div>

@@ -26,6 +26,10 @@ import { AddResponsibilityListComponent } from './add-responsibility-list/add-re
 import { AddResponsibilityMappingListComponent } from './add-responsibility-mapping-list/add-responsibility-mapping-list.component';
 import { ResponsibilityArchMappingListComponent } from './responsibility-arch-mapping-list/responsibility-arch-mapping-list.component';
 import { ResponsibilityMappingListComponent } from './responsibility-mapping-list/responsibility-mapping-list.component';
+import { EsiCalculationMonthListComponent } from './esi-calculation-month-list/esi-calculation-month-list.component';
+import { AddEsiCalculationMonthLimitComponent } from './add-esi-calculation-month-limit/add-esi-calculation-month-limit.component';
+import { BranchProbationSettingsListComponent } from './branch-probation-settings-list/branch-probation-settings-list.component';
+import { AddBranchProbationSettingsComponent } from './add-branch-probation-settings/add-branch-probation-settings.component';
 
 export const routes: Routes = [
   {
@@ -147,6 +151,14 @@ export const routes: Routes = [
         path: 'responsibility/updateMappingResponsibilityList',
         component: AddResponsibilityMappingListComponent,
       },
+      {
+        path: 'esiCalculationMonthLimit', component: EsiCalculationMonthListComponent,
+      },
+      { path: 'addEsiCalculationMonthLimit', component: AddEsiCalculationMonthLimitComponent },
+      { path: 'updateEsiCalculationMonthLimit/:id', component: AddEsiCalculationMonthLimitComponent },
+      { path: 'branch-probation-setting', component: BranchProbationSettingsListComponent },
+      { path: 'add-branch-probation-setting', component: AddBranchProbationSettingsComponent },
+      { path: 'update-branch-probation-setting/:branchProbationSettingId', component: AddBranchProbationSettingsComponent }
     ],
   },
 ];

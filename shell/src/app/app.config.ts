@@ -14,6 +14,8 @@ import {
 import { routes } from './app.routes';
 import { ErrorInterceptor } from './_helpers/error-interceptor';
 import { LoaderInterceptor } from './loader/loader.interceptor';
+import { TokenRefreshInterceptor } from './_helpers/token-refresh.interceptor';
+import { JwtInterceptor } from './_helpers/jwt-interceptor.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,7 +33,13 @@ export const appConfig: ApplicationConfig = {
       useClass: LoaderInterceptor,
       multi: true,
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenRefreshInterceptor,
+      multi: true,
+    },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
